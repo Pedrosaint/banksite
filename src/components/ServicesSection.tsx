@@ -7,8 +7,13 @@ import {
   FiRefreshCw,
   FiLock,
 } from "react-icons/fi";
+import { useReveal } from "../hooks/useReveal";
 
 export default function ServicesSection() {
+  const titleRef = useReveal();
+  const gridRef = useReveal();
+  const securityRef = useReveal();
+
   const services = [
     {
       title: "Online Banking",
@@ -49,8 +54,8 @@ export default function ServicesSection() {
   return (
     <section id="services" className="bg-gray-50 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-blue-900 mb-4">
+        <div ref={titleRef} className="text-center mb-12 reveal">
+          <h2 className="text-4xl font-bold text-[#0a2540] mb-4">
             Our Services
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -58,15 +63,17 @@ export default function ServicesSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-16 stagger-children">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
               <div
                 key={index}
-                className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition duration-300 text-center"
+                className="bg-white rounded-xl border border-gray-200 p-8 hover-lift text-center group"
               >
-                <IconComponent className="text-6xl text-blue-900 mx-auto mb-4" />
+                <div className="w-16 h-16 bg-[#e6f7f5] rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-[#13b5a3] transition-colors duration-300">
+                  <IconComponent className="text-3xl text-[#13b5a3] group-hover:text-white transition-colors duration-300" />
+                </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   {service.title}
                 </h3>
@@ -77,7 +84,7 @@ export default function ServicesSection() {
         </div>
 
         {/* Security & Trust */}
-        <div className="bg-linear-to-r from-blue-900 to-blue-700 rounded-xl p-12 text-white">
+        <div ref={securityRef} className="bg-[#0a2540] rounded-xl p-6 sm:p-8 md:p-12 text-white reveal-scale">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-center mb-8">
               <FiLock className="text-4xl mr-3" />
@@ -85,44 +92,44 @@ export default function ServicesSection() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex items-start">
-                <span className="text-3xl mr-4">✓</span>
+                <span className="text-3xl mr-4 text-[#13b5a3]">✓</span>
                 <div>
                   <h4 className="font-bold text-lg mb-2">NCUA Insured</h4>
-                  <p className="text-blue-100">
+                  <p className="text-white/80">
                     Your deposits are protected up to $250,000 by the National
                     Credit Union Administration
                   </p>
                 </div>
               </div>
               <div className="flex items-start">
-                <span className="text-3xl mr-4">✓</span>
+                <span className="text-3xl mr-4 text-[#13b5a3]">✓</span>
                 <div>
                   <h4 className="font-bold text-lg mb-2">256-Bit Encryption</h4>
-                  <p className="text-blue-100">
+                  <p className="text-white/80">
                     Bank-level security protects all your transactions and
                     personal information
                   </p>
                 </div>
               </div>
               <div className="flex items-start">
-                <span className="text-3xl mr-4">✓</span>
+                <span className="text-3xl mr-4 text-[#13b5a3]">✓</span>
                 <div>
                   <h4 className="font-bold text-lg mb-2">
                     Multi-Factor Authentication
                   </h4>
-                  <p className="text-blue-100">
+                  <p className="text-white/80">
                     Extra layer of protection ensures only you can access your
                     accounts
                   </p>
                 </div>
               </div>
               <div className="flex items-start">
-                <span className="text-3xl mr-4">✓</span>
+                <span className="text-3xl mr-4 text-[#13b5a3]">✓</span>
                 <div>
                   <h4 className="font-bold text-lg mb-2">
                     24/7 Fraud Monitoring
                   </h4>
-                  <p className="text-blue-100">
+                  <p className="text-white/80">
                     Continuous monitoring to detect and prevent unauthorized
                     activity
                   </p>

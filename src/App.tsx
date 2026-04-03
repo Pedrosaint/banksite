@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UtilityBar from "./components/UtilityBar";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
@@ -9,8 +10,9 @@ import MediaSection from "./components/MediaSection";
 import AboutSection from "./components/AboutSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
+import ProductPage from "./pages/ProductPage";
 
-function App() {
+function HomePage() {
   const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
@@ -45,16 +47,26 @@ function App() {
       <UtilityBar />
       <Navbar activeSection={activeSection} />
       <HeroSection />
-      {/* <LoginPanel /> */}
       <AccountsSection />
       <LoansSection />
       <ServicesSection />
       <MediaSection />
       <AboutSection />
       <ContactSection />
-      {/* <LoginPanel /> */}
       <Footer />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/accounts/:slug" element={<ProductPage />} />
+        <Route path="/loans/:slug" element={<ProductPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

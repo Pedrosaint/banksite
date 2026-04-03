@@ -94,7 +94,7 @@ const slides = [
 function LoginPanel() {
   const [showPw, setShowPw] = useState(false);
   return (
-    <div className="w-70 md:w-75 shrink-0 bg-white/97 rounded-xl p-5 md:p-7 flex flex-col gap-4 shadow-2xl">
+    <div className="hidden md:flex w-70 md:w-75 shrink-0 bg-white/97 rounded-xl p-5 md:p-7 flex-col gap-4 border border-white/20">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <div
@@ -226,7 +226,7 @@ function LoginPanel() {
 function CardMockup() {
   return (
     <div
-      className="absolute right-10 bottom-12 z-10 rounded-2xl p-4 w-55 shadow-2xl animate-floatUp"
+      className="absolute right-10 bottom-12 z-10 rounded-2xl p-4 w-55 animate-floatUp"
       style={{ backgroundColor: GREEN }}
     >
       <div className="w-7 h-5 bg-[#e8b84b] rounded mb-3" />
@@ -252,7 +252,7 @@ function CardMockup() {
 
 function NotifBubble() {
   return (
-    <div className="absolute left-14 bottom-14 z-10 bg-white rounded-xl px-4 py-3 flex items-center gap-2.5 shadow-xl animate-floatUp">
+    <div className="absolute left-14 bottom-14 z-10 bg-white rounded-xl px-4 py-3 flex items-center gap-2.5 animate-floatUp">
       <div className="w-8 h-8 bg-[#e8f8f5] rounded-full flex items-center justify-center shrink-0">
         <svg
           className="w-3.5 h-3.5"
@@ -342,7 +342,7 @@ function Modal({ isOpen, onClose, title, children }: ModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-2 sm:p-4">
       <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b flex items-center justify-between p-6">
           <h2
@@ -581,7 +581,7 @@ export default function HeroSection() {
             ].map((portfolio) => (
               <div
                 key={portfolio.name}
-                className="p-4 border rounded-lg hover:shadow-md transition-shadow"
+                className="p-4 border rounded-lg hover:bg-gray-50 transition-colors"
                 style={{ borderColor: GREEN }}
               >
                 <h4 className="font-semibold mb-2" style={{ color: GREEN }}>
@@ -636,11 +636,10 @@ export default function HeroSection() {
         <div
           className="relative overflow-hidden rounded-2xl transition-all duration-700"
           style={{
-            minHeight: 540,
+            minHeight: "clamp(400px, 70vh, 540px)",
             backgroundImage: `url('${slide.image}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundAttachment: "fixed",
           }}
         >
           {/* Dark overlay for text readability */}
@@ -650,8 +649,8 @@ export default function HeroSection() {
           />
           {/* Slide content */}
           <div
-            className="relative z-10 mx-auto max-w-7xl flex flex-col md:flex-row items-center px-4 md:px-10 gap-6 md:gap-12"
-            style={{ paddingTop: 40, paddingBottom: 40, minHeight: 540 }}
+            className="relative z-10 mx-auto max-w-7xl flex flex-col md:flex-row items-center px-4 sm:px-6 md:px-10 gap-6 md:gap-12"
+            style={{ paddingTop: 32, paddingBottom: 32, minHeight: "clamp(400px, 70vh, 540px)" }}
           >
             {/* Left */}
             <div className="flex-1 flex flex-col gap-5 text-white">
@@ -667,7 +666,7 @@ export default function HeroSection() {
               </div>
 
               {/* Title */}
-              <h1 className="font-serif text-3xl md:text-[42px] leading-tight md:leading-[1.15] font-normal">
+              <h1 className="font-serif text-2xl sm:text-3xl md:text-[42px] leading-tight md:leading-[1.15] font-normal">
                 {slide.title[0]}
                 <br />
                 {slide.title[1]}
@@ -700,7 +699,7 @@ export default function HeroSection() {
               </div>
 
               {/* Stats */}
-              <div className="flex flex-wrap gap-6 md:gap-8 mt-4 pt-5 border-t border-white/12">
+              <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 mt-4 pt-5 border-t border-white/12">
                 {slide.stats.map((s) => (
                   <div key={s.lbl} className="flex flex-col gap-0.5">
                     <span className="font-serif text-2xl md:text-[26px]">
@@ -718,15 +717,17 @@ export default function HeroSection() {
             <LoginPanel />
           </div>
 
-          {/* Slide-specific mockups */}
-          {slide.mockup === "card" && (
-            <>
-              <CardMockup />
-              <NotifBubble />
-            </>
-          )}
-          {slide.mockup === "rate" && <RateMockup />}
-          {slide.mockup === "app" && <AppMockup />}
+          {/* Slide-specific mockups (hidden on mobile) */}
+          <div className="hidden lg:block">
+            {slide.mockup === "card" && (
+              <>
+                <CardMockup />
+                <NotifBubble />
+              </>
+            )}
+            {slide.mockup === "rate" && <RateMockup />}
+            {slide.mockup === "app" && <AppMockup />}
+          </div>
 
           {/* Dot indicators */}
           <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">

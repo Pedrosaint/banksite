@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { FiMapPin, FiPhone, FiMail, FiClock } from "react-icons/fi";
+import { useReveal } from "../hooks/useReveal";
 
 export default function ContactSection() {
+  const titleRef = useReveal();
+  const leftRef = useReveal();
+  const rightRef = useReveal();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,7 +27,6 @@ export default function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
     setSubmitted(true);
     setFormData({ name: "", email: "", message: "" });
     setTimeout(() => setSubmitted(false), 3000);
@@ -31,8 +35,8 @@ export default function ContactSection() {
   return (
     <section id="contact" className="bg-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-blue-900 mb-4">
+        <div ref={titleRef} className="text-center mb-12 reveal">
+          <h2 className="text-4xl font-bold text-[#0a2540] mb-4">
             Get in Touch
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -42,14 +46,16 @@ export default function ContactSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left - Contact Info */}
-          <div>
-            <h3 className="text-2xl font-bold text-blue-900 mb-8">
+          <div ref={leftRef} className="reveal-left">
+            <h3 className="text-2xl font-bold text-[#0a2540] mb-8">
               Contact Information
             </h3>
 
             <div className="space-y-8 mb-12">
-              <div className="flex items-start">
-                <FiMapPin className="text-3xl mr-4 text-blue-900 shrink-0 mt-1" />
+              <div className="flex items-start group">
+                <div className="w-12 h-12 bg-[#e6f7f5] rounded-xl flex items-center justify-center mr-4 shrink-0 group-hover:bg-[#13b5a3] transition-colors duration-300">
+                  <FiMapPin className="text-xl text-[#13b5a3] group-hover:text-white transition-colors duration-300" />
+                </div>
                 <div>
                   <h4 className="text-lg font-bold text-gray-900 mb-2">
                     Main Office
@@ -64,8 +70,10 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              <div className="flex items-start">
-                <FiPhone className="text-3xl mr-4 text-blue-900 shrink-0 mt-1" />
+              <div className="flex items-start group">
+                <div className="w-12 h-12 bg-[#e6f7f5] rounded-xl flex items-center justify-center mr-4 shrink-0 group-hover:bg-[#13b5a3] transition-colors duration-300">
+                  <FiPhone className="text-xl text-[#13b5a3] group-hover:text-white transition-colors duration-300" />
+                </div>
                 <div>
                   <h4 className="text-lg font-bold text-gray-900 mb-2">
                     Phone
@@ -73,7 +81,7 @@ export default function ContactSection() {
                   <p className="text-gray-600">
                     <a
                       href="tel:+15551234567"
-                      className="text-blue-600 hover:underline font-semibold"
+                      className="text-[#13b5a3] hover:text-[#0f9e8f] font-semibold transition-colors"
                     >
                       +1 (555) 123-4567
                     </a>
@@ -83,8 +91,10 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              <div className="flex items-start">
-                <FiMail className="text-3xl mr-4 text-blue-900 shrink-0 mt-1" />
+              <div className="flex items-start group">
+                <div className="w-12 h-12 bg-[#e6f7f5] rounded-xl flex items-center justify-center mr-4 shrink-0 group-hover:bg-[#13b5a3] transition-colors duration-300">
+                  <FiMail className="text-xl text-[#13b5a3] group-hover:text-white transition-colors duration-300" />
+                </div>
                 <div>
                   <h4 className="text-lg font-bold text-gray-900 mb-2">
                     Email
@@ -92,7 +102,7 @@ export default function ContactSection() {
                   <p className="text-gray-600">
                     <a
                       href="mailto:support@novatrust.com"
-                      className="text-blue-600 hover:underline font-semibold"
+                      className="text-[#13b5a3] hover:text-[#0f9e8f] font-semibold transition-colors"
                     >
                       support@novatrust.com
                     </a>
@@ -100,8 +110,10 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              <div className="flex items-start">
-                <FiClock className="text-3xl mr-4 text-blue-900 shrink-0 mt-1" />
+              <div className="flex items-start group">
+                <div className="w-12 h-12 bg-[#e6f7f5] rounded-xl flex items-center justify-center mr-4 shrink-0 group-hover:bg-[#13b5a3] transition-colors duration-300">
+                  <FiClock className="text-xl text-[#13b5a3] group-hover:text-white transition-colors duration-300" />
+                </div>
                 <div>
                   <h4 className="text-lg font-bold text-gray-900 mb-2">
                     Business Hours
@@ -119,14 +131,14 @@ export default function ContactSection() {
           </div>
 
           {/* Right - Contact Form */}
-          <div className="bg-gray-50 rounded-xl p-8 shadow-lg">
+          <div ref={rightRef} className="bg-gray-50 rounded-xl p-8 border border-gray-200 reveal-right">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">
               Send us a Message
             </h3>
 
             {submitted && (
-              <div className="mb-6 p-4 bg-green-100 border border-green-400 rounded-lg">
-                <p className="text-green-800 font-semibold">
+              <div className="mb-6 p-4 bg-[#e6f7f5] border border-[#13b5a3]/30 rounded-lg animate-[fadeInUp_0.4s_ease-out]">
+                <p className="text-[#0a2540] font-semibold">
                   ✓ Thank you! We'll be in touch soon.
                 </p>
               </div>
@@ -147,7 +159,7 @@ export default function ContactSection() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition duration-300"
                   placeholder="John Doe"
                 />
               </div>
@@ -166,7 +178,7 @@ export default function ContactSection() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition duration-300"
                   placeholder="john@example.com"
                 />
               </div>
@@ -185,14 +197,14 @@ export default function ContactSection() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition duration-300"
                   placeholder="Tell us how we can help..."
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-blue-900 text-white py-3 rounded-lg hover:bg-blue-800 transition duration-300 font-semibold"
+                className="w-full bg-[#13b5a3] text-white py-3 rounded-lg hover:bg-[#0f9e8f] transition-all duration-300 font-semibold btn-glow"
               >
                 Send Message
               </button>

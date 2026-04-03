@@ -32,7 +32,7 @@ export default function LoginPanel() {
           <div className="md:col-span-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Existing Member */}
-              <div className="bg-gray-50 rounded-xl p-8 shadow-md">
+              <div className="bg-gray-50 rounded-xl p-8 border border-gray-200">
                 <h3 className="text-2xl font-bold text-blue-900 mb-6">
                   Member Login
                 </h3>
@@ -69,7 +69,7 @@ export default function LoginPanel() {
               </div>
 
               {/* New Member */}
-              <div className="bg-blue-50 rounded-xl p-8 shadow-md border-2 border-blue-200">
+              <div className="bg-blue-50 rounded-xl p-8 border-2 border-blue-200">
                 <h3 className="text-2xl font-bold text-blue-900 mb-6">
                   New to Us?
                 </h3>

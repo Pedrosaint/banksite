@@ -9,12 +9,14 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-slate-900 text-gray-400 py-16">
+    <footer className="bg-[#0a2540] text-gray-400 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-12">
           {/* Brand Column */}
           <div>
-            <h3 className="text-2xl font-bold text-white mb-4">NovaTrust</h3>
+            <h3 className="text-2xl font-bold text-white mb-4">
+              Nova<span className="text-[#13b5a3]">Trust</span>
+            </h3>
             <p className="text-gray-400 text-sm mb-6 leading-relaxed">
               Building trust and empowering financial futures for over 25 years.
               Your credit union, your community.
@@ -22,28 +24,28 @@ export default function Footer() {
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition duration-300"
+                className="w-10 h-10 bg-[#13b5a3]/20 text-[#13b5a3] rounded-full flex items-center justify-center hover:bg-[#13b5a3] hover:text-white transition-all duration-300"
                 title="Facebook"
               >
                 <FaFacebook />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center hover:bg-sky-600 transition duration-300"
+                className="w-10 h-10 bg-[#13b5a3]/20 text-[#13b5a3] rounded-full flex items-center justify-center hover:bg-[#13b5a3] hover:text-white transition-all duration-300"
                 title="Twitter"
               >
                 <FaTwitter />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-pink-600 text-white rounded-full flex items-center justify-center hover:bg-pink-700 transition duration-300"
+                className="w-10 h-10 bg-[#13b5a3]/20 text-[#13b5a3] rounded-full flex items-center justify-center hover:bg-[#13b5a3] hover:text-white transition-all duration-300"
                 title="Instagram"
               >
                 <FaInstagram />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-blue-700 text-white rounded-full flex items-center justify-center hover:bg-blue-800 transition duration-300"
+                className="w-10 h-10 bg-[#13b5a3]/20 text-[#13b5a3] rounded-full flex items-center justify-center hover:bg-[#13b5a3] hover:text-white transition-all duration-300"
                 title="LinkedIn"
               >
                 <FaLinkedin />
@@ -58,7 +60,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => handleScroll("home")}
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   Home
                 </button>
@@ -66,7 +68,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => handleScroll("about")}
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   About
                 </button>
@@ -74,7 +76,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => handleScroll("accounts")}
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   Accounts
                 </button>
@@ -82,7 +84,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => handleScroll("loans")}
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   Loans & Rates
                 </button>
@@ -90,7 +92,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => handleScroll("services")}
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   Services
                 </button>
@@ -105,7 +107,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   Online Banking
                 </a>
@@ -113,7 +115,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   Mobile App
                 </a>
@@ -121,7 +123,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   Bill Pay
                 </a>
@@ -129,7 +131,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   ATM Locator
                 </a>
@@ -137,7 +139,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   Customer Support
                 </a>
@@ -152,7 +154,7 @@ export default function Footer() {
               <li>
                 <a
                   href="tel:+15551234567"
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   +1 (555) 123-4567
                 </a>
@@ -160,7 +162,7 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:support@novatrust.com"
-                  className="text-gray-400 hover:text-white transition duration-300"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
                   support@novatrust.com
                 </a>
@@ -169,7 +171,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => handleScroll("contact")}
-                  className="text-gray-400 hover:text-white transition duration-300 mt-2"
+                  className="text-gray-400 hover:text-[#13b5a3] transition duration-300 mt-2"
                 >
                   Contact Form
                 </button>
@@ -179,19 +181,19 @@ export default function Footer() {
         </div>
 
         {/* Divider & Bottom Info */}
-        <div className="border-t border-slate-700 pt-8">
+        <div className="border-t border-[#13b5a3]/20 pt-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-sm">
             <div className="text-gray-400">
               <p>&copy; 2025 NovaTrust Credit Union. All rights reserved.</p>
             </div>
             <div className="md:text-right space-y-2 md:space-y-0 md:flex md:justify-end md:gap-6 text-gray-400">
-              <a href="#" className="hover:text-white transition duration-300">
+              <a href="#" className="hover:text-[#13b5a3] transition duration-300">
                 Privacy Policy
               </a>
-              <a href="#" className="hover:text-white transition duration-300">
+              <a href="#" className="hover:text-[#13b5a3] transition duration-300">
                 Terms of Service
               </a>
-              <a href="#" className="hover:text-white transition duration-300">
+              <a href="#" className="hover:text-[#13b5a3] transition duration-300">
                 Accessibility
               </a>
             </div>
@@ -199,9 +201,9 @@ export default function Footer() {
         </div>
 
         {/* NCUA Notice */}
-        <div className="p-4 bg-slate-800 border border-slate-700 rounded text-xs text-gray-400">
-          <p className="font-semibold text-gray-300 mb-1">
-            🔒 NCUA Insurance Notice
+        <div className="p-4 bg-[#13b5a3]/10 border border-[#13b5a3]/20 rounded text-xs text-gray-400">
+          <p className="font-semibold text-[#13b5a3] mb-1">
+            NCUA Insurance Notice
           </p>
           <p>
             This credit union is federally insured by the National Credit Union

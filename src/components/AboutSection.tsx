@@ -1,12 +1,17 @@
+import { useReveal } from "../hooks/useReveal";
+
 export default function AboutSection() {
+  const leftRef = useReveal();
+  const rightRef = useReveal();
+
   return (
     <section id="about" className="bg-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Left - Content */}
-          <div>
-            <h2 className="text-4xl font-bold text-blue-900 mb-6">
-              About NovaTrust
+          <div ref={leftRef} className="reveal-left">
+            <h2 className="text-4xl font-bold text-[#0a2540] mb-6">
+              About <span className="text-[#13b5a3]">NovaTrust</span>
             </h2>
             <p className="text-gray-600 text-lg mb-4 leading-relaxed">
               NovaTrust Credit Union has been serving our community with
@@ -23,7 +28,7 @@ export default function AboutSection() {
             {/* Mission & Values */}
             <div className="space-y-6 mb-8">
               <div>
-                <h3 className="text-xl font-bold text-blue-900 mb-2">
+                <h3 className="text-xl font-bold text-[#0a2540] mb-2">
                   Our Mission
                 </h3>
                 <p className="text-gray-600">
@@ -32,7 +37,7 @@ export default function AboutSection() {
                 </p>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-blue-900 mb-2">
+                <h3 className="text-xl font-bold text-[#0a2540] mb-2">
                   Our Values
                 </h3>
                 <div className="flex flex-wrap gap-3">
@@ -45,7 +50,7 @@ export default function AboutSection() {
                   ].map((value) => (
                     <span
                       key={value}
-                      className="bg-blue-100 text-blue-900 px-4 py-2 rounded-full text-sm font-semibold"
+                      className="bg-[#e6f7f5] text-[#0a2540] px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#13b5a3] hover:text-white transition-colors duration-300 cursor-default"
                     >
                       {value}
                     </span>
@@ -55,25 +60,25 @@ export default function AboutSection() {
             </div>
 
             {/* Member Benefits */}
-            <div className="bg-blue-50 rounded-lg p-6">
-              <h3 className="text-lg font-bold text-blue-900 mb-4">
+            <div className="bg-[#e6f7f5]/60 rounded-lg p-6 border border-[#13b5a3]/15">
+              <h3 className="text-lg font-bold text-[#0a2540] mb-4">
                 Member Benefits
               </h3>
               <ul className="space-y-2 text-gray-700">
                 <li className="flex items-center">
-                  <span className="text-green-600 font-bold mr-2">✓</span>{" "}
+                  <span className="text-[#13b5a3] font-bold mr-2">✓</span>{" "}
                   Competitive interest rates
                 </li>
                 <li className="flex items-center">
-                  <span className="text-green-600 font-bold mr-2">✓</span> NCUA
+                  <span className="text-[#13b5a3] font-bold mr-2">✓</span> NCUA
                   insured up to $250,000
                 </li>
                 <li className="flex items-center">
-                  <span className="text-green-600 font-bold mr-2">✓</span>{" "}
+                  <span className="text-[#13b5a3] font-bold mr-2">✓</span>{" "}
                   Award-winning customer service
                 </li>
                 <li className="flex items-center">
-                  <span className="text-green-600 font-bold mr-2">✓</span> No
+                  <span className="text-[#13b5a3] font-bold mr-2">✓</span> No
                   hidden fees
                 </li>
               </ul>
@@ -81,24 +86,24 @@ export default function AboutSection() {
           </div>
 
           {/* Right - Stats */}
-          <div className="bg-linear-to-br from-blue-900 via-blue-700 to-blue-800 rounded-xl p-8 text-white shadow-2xl">
+          <div ref={rightRef} className="bg-[#0a2540] rounded-xl p-5 sm:p-6 md:p-8 text-white reveal-right">
             <div className="space-y-8">
-              <div>
-                <div className="text-5xl font-bold mb-2">25+</div>
-                <p className="text-blue-100 text-lg">
+              <div className="group">
+                <div className="text-5xl font-bold mb-2 group-hover:text-[#13b5a3] transition-colors duration-300">25+</div>
+                <p className="text-white/80 text-lg">
                   Years Serving Our Community
                 </p>
               </div>
-              <div className="border-t border-blue-500 pt-8">
-                <div className="text-5xl font-bold mb-2">50K+</div>
-                <p className="text-blue-100 text-lg">Trusted Members</p>
+              <div className="border-t border-white/20 pt-8 group">
+                <div className="text-5xl font-bold mb-2 group-hover:text-[#13b5a3] transition-colors duration-300">50K+</div>
+                <p className="text-white/80 text-lg">Trusted Members</p>
               </div>
-              <div className="border-t border-blue-500 pt-8">
-                <div className="text-5xl font-bold mb-2">$2.5B</div>
-                <p className="text-blue-100 text-lg">Assets Under Management</p>
+              <div className="border-t border-white/20 pt-8 group">
+                <div className="text-5xl font-bold mb-2 group-hover:text-[#13b5a3] transition-colors duration-300">$2.5B</div>
+                <p className="text-white/80 text-lg">Assets Under Management</p>
               </div>
-              <div className="border-t border-blue-500 pt-8 text-center">
-                <p className="text-blue-100 italic text-lg">
+              <div className="border-t border-white/20 pt-8 text-center">
+                <p className="text-white/80 italic text-lg">
                   "Your financial success is our success."
                 </p>
               </div>
