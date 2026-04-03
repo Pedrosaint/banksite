@@ -1,4 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../store/authSlice";
+import { mockUsers } from "../data/mockData";
 import Image3 from "../assets/eduardo-soares-utWyPB8_FU8-unsplash.jpg";
 
 const GREEN = "#13b5a3";
@@ -93,6 +98,35 @@ const slides = [
 
 function LoginPanel() {
   const [showPw, setShowPw] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    setTimeout(() => {
+      const user = mockUsers.find((u) => u.email === email);
+      if (!user) {
+        setError("Account not found");
+        setLoading(false);
+        return;
+      }
+      if (password.length < 4) {
+        setError("Invalid password");
+        setLoading(false);
+        return;
+      }
+      dispatch(login({ token: "mock-jwt-token-" + user.id, role: user.role, user }));
+      navigate(user.role === "admin" ? "/admin/dashboard/home" : "/user/dashboard/home");
+    }, 600);
+  };
+
   return (
     <div className="hidden md:flex w-70 md:w-75 shrink-0 bg-white/97 rounded-xl p-5 md:p-7 flex-col gap-4 border border-white/20">
       {/* Logo */}
@@ -125,66 +159,70 @@ function LoginPanel() {
         </p>
       </div>
 
-      {/* Fields */}
-      <div className="flex flex-col gap-1">
-        <label className="text-[11px] font-medium text-[#6b7fa3] uppercase tracking-wider">
-          Login ID
-        </label>
-        <input
-          className="bg-[#f4f7fb] border-[1.5px] border-[#e0e8f4] rounded-lg px-3 py-2.5 text-sm text-[#0a2540] outline-none transition-colors placeholder:text-[#b0bdd6] focus:border-[#13b5a3] focus:bg-white"
-          placeholder="Enter your username"
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label className="text-[11px] font-medium text-[#6b7fa3] uppercase tracking-wider">
-          Password
-        </label>
-        <div className="relative">
-          <input
-            type={showPw ? "text" : "password"}
-            className="bg-[#f4f7fb] border-[1.5px] border-[#e0e8f4] rounded-lg px-3 py-2.5 pr-9 text-sm text-[#0a2540] outline-none transition-colors placeholder:text-[#b0bdd6] w-full focus:border-[#13b5a3] focus:bg-white"
-            placeholder="Enter your password"
-          />
-          <button
-            onClick={() => setShowPw(!showPw)}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#b0bdd6] hover:text-[#6b7fa3] transition-colors"
-          >
-            {showPw ? (
-              <svg
-                className="w-4 h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              >
-                <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24M1 1l22 22" />
-              </svg>
-            ) : (
-              <svg
-                className="w-4 h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              >
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-            )}
-          </button>
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-600 text-[12px] rounded-lg px-3 py-2">
+          {error}
         </div>
-      </div>
+      )}
 
-      <button
-        className="text-white py-3 rounded-lg text-sm font-medium tracking-wide transition-all w-full"
-        style={{ backgroundColor: GREEN, opacity: 1 }}
-        onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
-        onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-      >
-        Log In Securely
-      </button>
+      <form onSubmit={handleLogin} className="flex flex-col gap-3">
+        {/* Email */}
+        <div className="flex flex-col gap-1">
+          <label className="text-[11px] font-medium text-[#6b7fa3] uppercase tracking-wider">
+            Email
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="bg-[#f4f7fb] border-[1.5px] border-[#e0e8f4] rounded-lg px-3 py-2.5 text-sm text-[#0a2540] outline-none transition-colors placeholder:text-[#b0bdd6] focus:border-[#13b5a3] focus:bg-white"
+            placeholder="Enter your email"
+          />
+        </div>
+
+        {/* Password */}
+        <div className="flex flex-col gap-1">
+          <label className="text-[11px] font-medium text-[#6b7fa3] uppercase tracking-wider">
+            Password
+          </label>
+          <div className="relative">
+            <input
+              type={showPw ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="bg-[#f4f7fb] border-[1.5px] border-[#e0e8f4] rounded-lg px-3 py-2.5 pr-9 text-sm text-[#0a2540] outline-none transition-colors placeholder:text-[#b0bdd6] w-full focus:border-[#13b5a3] focus:bg-white"
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPw(!showPw)}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#b0bdd6] hover:text-[#6b7fa3] transition-colors"
+            >
+              {showPw ? (
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24M1 1l22 22" />
+                </svg>
+              ) : (
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="text-white py-3 rounded-lg text-sm font-medium tracking-wide transition-all w-full disabled:opacity-60"
+          style={{ backgroundColor: GREEN }}
+        >
+          {loading ? "Signing in..." : "Log In Securely"}
+        </button>
+      </form>
 
       <div className="flex justify-between -mt-1">
         <a
@@ -206,6 +244,7 @@ function LoginPanel() {
       <div className="h-px bg-[#edf0f7]" />
 
       <div
+        onClick={() => navigate("/register")}
         className="border-dashed border-[1.5px] rounded-lg p-3 text-center cursor-pointer hover:opacity-90 transition-opacity"
         style={{
           backgroundColor: `rgb(19, 181, 163, 0.1)`,

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface NavbarProps {
   activeSection: string;
@@ -55,9 +56,9 @@ export default function Navbar({ activeSection }: NavbarProps) {
 
           {/* Online Banking Button */}
           <div className="hidden md:block">
-            <button className="bg-[#13b5a3] text-white px-6 py-2 rounded-lg hover:bg-[#0f9e8f] transition-all duration-300 font-semibold btn-glow">
+            <Link to="/login" className="bg-[#13b5a3] text-white px-6 py-2 rounded-lg hover:bg-[#0f9e8f] transition-all duration-300 font-semibold btn-glow">
               Online Banking
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Icon */}
@@ -87,9 +88,9 @@ export default function Navbar({ activeSection }: NavbarProps) {
                 {item.name}
               </button>
             ))}
-            <button className="w-full bg-[#13b5a3] text-white px-4 py-2 rounded font-semibold mt-2 hover:bg-[#0f9e8f] transition-all duration-300">
+            <Link to="/login" className="block w-full bg-[#13b5a3] text-white px-4 py-2 rounded font-semibold mt-2 hover:bg-[#0f9e8f] transition-all duration-300 text-center">
               Online Banking
-            </button>
+            </Link>
           </div>
         )}
       </div>

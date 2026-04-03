@@ -1,4 +1,5 @@
 import { FiPhone, FiMail } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 export default function UtilityBar() {
   return (
@@ -23,13 +24,13 @@ export default function UtilityBar() {
           </a>
         </div>
         <div className="flex items-center space-x-2 sm:space-x-4">
-          <a href="#" className="hover:text-[#13b5a3] transition">
+          <Link to="/login" className="hover:text-[#13b5a3] transition">
             Login
-          </a>
+          </Link>
           <span>|</span>
-          <a href="#" className="hover:text-[#13b5a3] transition">
+          <Link to="/register" className="hover:text-[#13b5a3] transition">
             Register
-          </a>
+          </Link>
         </div>
       </div>
     </div>

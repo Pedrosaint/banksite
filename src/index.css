@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Card flip support */
+.backface-hidden {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
 /* Scroll-reveal animation classes */
 .reveal {
   opacity: 0;
