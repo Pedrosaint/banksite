@@ -184,16 +184,28 @@ export default function Footer() {
         <div className="border-t border-[#13b5a3]/20 pt-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-sm">
             <div className="text-gray-400">
-              <p>&copy; 2025 NovaTrust Credit Union. All rights reserved.</p>
+              <p>
+                &copy; 2025 American Credit Digital Banking. All rights
+                reserved.
+              </p>
             </div>
             <div className="md:text-right space-y-2 md:space-y-0 md:flex md:justify-end md:gap-6 text-gray-400">
-              <a href="#" className="hover:text-[#13b5a3] transition duration-300">
+              <a
+                href="#"
+                className="hover:text-[#13b5a3] transition duration-300"
+              >
                 Privacy Policy
               </a>
-              <a href="#" className="hover:text-[#13b5a3] transition duration-300">
+              <a
+                href="#"
+                className="hover:text-[#13b5a3] transition duration-300"
+              >
                 Terms of Service
               </a>
-              <a href="#" className="hover:text-[#13b5a3] transition duration-300">
+              <a
+                href="#"
+                className="hover:text-[#13b5a3] transition duration-300"
+              >
                 Accessibility
               </a>
             </div>

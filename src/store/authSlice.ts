@@ -1,34 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-
-export interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  country: string;
-  address: string;
-  gender: string;
-  dob: string;
-  accountNumber: string;
-  accountType: string;
-  swiftCode: string;
-  balance: number;
-  availableBalance: number;
-  status: "active" | "suspended" | "deleted";
-  role: "admin" | "user";
-  profileCompletion: number;
-  accountSecurity: number;
-  verification: number;
-  avatar?: string;
-}
-
-interface AuthState {
-  token: string | null;
-  role: "admin" | "user" | null;
-  user: User | null;
-  isAuthenticated: boolean;
-}
+import type { User, AuthState, UserRole } from "../auth/types";
 
 function safeParseUser(): User | null {
   try {
@@ -45,7 +16,7 @@ const parsedUser = safeParseUser();
 
 const initialState: AuthState = {
   token: localStorage.getItem("token"),
-  role: localStorage.getItem("role") as "admin" | "user" | null,
+  role: localStorage.getItem("role") as UserRole | null,
   user: parsedUser,
   isAuthenticated: !!localStorage.getItem("token") && !!parsedUser,
 };
@@ -54,7 +25,14 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login(state, action: PayloadAction<{ token: string; role: "admin" | "user"; user: User }>) {
+    login(
+      state,
+      action: PayloadAction<{
+        token: string;
+        role: "admin" | "user";
+        user: User | null;
+      }>,
+    ) {
       state.token = action.payload.token;
       state.role = action.payload.role;
       state.user = action.payload.user;

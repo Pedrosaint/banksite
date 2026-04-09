@@ -59,7 +59,7 @@ export default function AccountsSection() {
           </p>
         </div>
 
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-8 stagger-children">
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
           {accounts.map((account, index) => {
             const IconComponent = account.icon;
             return (

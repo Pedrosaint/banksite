@@ -57,7 +57,7 @@ export default function LoginPanel() {
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
-                  <button className="w-full bg-blue-900 text-white py-3 rounded-lg hover:bg-blue-800 transition duration-300 font-semibold">
+                  <button className="w-full bg-blue-900 text-white py-3 rounded-lg hover:bg-blue-800 transition duration-300 font-semibold cursor-pointer">
                     Login
                   </button>
                   <div className="text-center">
@@ -78,10 +78,10 @@ export default function LoginPanel() {
                   Enroll in Online Banking today.
                 </p>
                 <div className="space-y-3">
-                  <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300 font-semibold">
+                  <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300 font-semibold cursor-pointer">
                     Enroll Now
                   </button>
-                  <button className="w-full border-2 border-blue-600 text-blue-600 py-3 rounded-lg hover:bg-blue-100 transition duration-300 font-semibold">
+                  <button className="w-full border-2 border-blue-600 text-blue-600 py-3 rounded-lg hover:bg-blue-100 transition duration-300 font-semibold cursor-pointer">
                     Learn More
                   </button>
                 </div>

@@ -344,11 +344,11 @@ export default function ProductPage() {
                     : "Apply now and get a decision fast. Our team is here to guide you every step of the way."}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button className="bg-[#13b5a3] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#0f9e8f] transition-all duration-300">
+                  <button className="bg-[#13b5a3] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#0f9e8f] transition-all duration-300 cursor-pointer">
                     {product.ctaLabel}
                   </button>
                   {product.ctaSecondaryLabel && (
-                    <button className="border-2 border-white/40 text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 hover:border-white transition-all duration-300">
+                    <button className="border-2 border-white/40 text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 hover:border-white transition-all duration-300 cursor-pointer">
                       {product.ctaSecondaryLabel}
                     </button>
                   )}

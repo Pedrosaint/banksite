@@ -15,11 +15,11 @@ export default function UtilityBar() {
             <span className="sm:hidden">Call</span>
           </a>
           <a
-            href="mailto:support@novatrust.com"
+            href="mailto:support@apexbank.com"
             className="hover:text-[#13b5a3] transition flex items-center space-x-1"
           >
             <FiMail className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span className="hidden sm:inline">support@novatrust.com</span>
+            <span className="hidden sm:inline">support@apexbank.com</span>
             <span className="sm:hidden">Email</span>
           </a>
         </div>

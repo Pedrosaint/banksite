@@ -46,7 +46,7 @@ export default function LoansSection() {
           </p>
         </div>
 
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 stagger-children">
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 stagger-children">
           {loans.map((loan, index) => {
             const IconComponent = loan.icon;
             return (

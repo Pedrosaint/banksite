@@ -1,9 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { login } from "../store/authSlice";
-import { mockUsers } from "../data/mockData";
 import Image3 from "../assets/eduardo-soares-utWyPB8_FU8-unsplash.jpg";
 
 const GREEN = "#13b5a3";
@@ -97,38 +94,16 @@ const slides = [
 ];
 
 function LoginPanel() {
-  const [showPw, setShowPw] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    setTimeout(() => {
-      const user = mockUsers.find((u) => u.email === email);
-      if (!user) {
-        setError("Account not found");
-        setLoading(false);
-        return;
-      }
-      if (password.length < 4) {
-        setError("Invalid password");
-        setLoading(false);
-        return;
-      }
-      dispatch(login({ token: "mock-jwt-token-" + user.id, role: user.role, user }));
-      navigate(user.role === "admin" ? "/admin/dashboard/home" : "/user/dashboard/home");
-    }, 600);
+    // Redirect to the actual login page
+    navigate("/login");
   };
 
   return (
-    <div className="hidden md:flex w-70 md:w-75 shrink-0 bg-white/97 rounded-xl p-5 md:p-7 flex-col gap-4 border border-white/20">
+    <div className="hidden lg:flex w-72 lg:w-80 xl:w-84 shrink-0 bg-white/97 rounded-xl p-5 lg:p-7 flex-col gap-4 border border-white/20">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <div
@@ -145,7 +120,7 @@ function LoginPanel() {
           </svg>
         </div>
         <span className="font-serif text-lg text-[#0a2540] font-medium">
-          NovaTrust
+          American Credit
         </span>
       </div>
 
@@ -159,70 +134,18 @@ function LoginPanel() {
         </p>
       </div>
 
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-600 text-[12px] rounded-lg px-3 py-2">
-          {error}
-        </div>
-      )}
-
-      <form onSubmit={handleLogin} className="flex flex-col gap-3">
-        {/* Email */}
-        <div className="flex flex-col gap-1">
-          <label className="text-[11px] font-medium text-[#6b7fa3] uppercase tracking-wider">
-            Email
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="bg-[#f4f7fb] border-[1.5px] border-[#e0e8f4] rounded-lg px-3 py-2.5 text-sm text-[#0a2540] outline-none transition-colors placeholder:text-[#b0bdd6] focus:border-[#13b5a3] focus:bg-white"
-            placeholder="Enter your email"
-          />
-        </div>
-
-        {/* Password */}
-        <div className="flex flex-col gap-1">
-          <label className="text-[11px] font-medium text-[#6b7fa3] uppercase tracking-wider">
-            Password
-          </label>
-          <div className="relative">
-            <input
-              type={showPw ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="bg-[#f4f7fb] border-[1.5px] border-[#e0e8f4] rounded-lg px-3 py-2.5 pr-9 text-sm text-[#0a2540] outline-none transition-colors placeholder:text-[#b0bdd6] w-full focus:border-[#13b5a3] focus:bg-white"
-              placeholder="Enter your password"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPw(!showPw)}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#b0bdd6] hover:text-[#6b7fa3] transition-colors"
-            >
-              {showPw ? (
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24M1 1l22 22" />
-                </svg>
-              ) : (
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
-
+      <div className="text-center">
+        <p className="text-gray-600 mb-4 text-sm">
+          Ready to access your account?
+        </p>
         <button
-          type="submit"
-          disabled={loading}
-          className="text-white py-3 rounded-lg text-sm font-medium tracking-wide transition-all w-full disabled:opacity-60"
+          onClick={handleLogin}
+          className="w-full text-white py-3 rounded-lg text-sm font-medium tracking-wide transition-all hover:opacity-90 cursor-pointer"
           style={{ backgroundColor: GREEN }}
         >
-          {loading ? "Signing in..." : "Log In Securely"}
+          Go to Login Page
         </button>
-      </form>
+      </div>
 
       <div className="flex justify-between -mt-1">
         <a
@@ -233,11 +156,11 @@ function LoginPanel() {
           Forgot Password?
         </a>
         <a
-          href="#"
+          href="/register"
           className="text-[12px] font-medium transition-colors hover:text-[#0a2540]"
           style={{ color: GREEN }}
         >
-          Unlock Account
+          Create Account
         </a>
       </div>
 
@@ -252,10 +175,10 @@ function LoginPanel() {
         }}
       >
         <p className="text-[12px] font-medium" style={{ color: GREEN }}>
-          First time here? Enroll now
+          New to American Credit? Create your account
         </p>
         <p className="text-[11px] text-[#8ea3bc] mt-0.5">
-          Takes less than 3 minutes
+          Join thousands of satisfied customers
         </p>
       </div>
     </div>
@@ -361,6 +284,9 @@ function AppMockup() {
           <div className="text-[12px] text-white font-medium">
             Get the mobile app
           </div>
+          <h1 className="text-3xl font-bold text-white">
+            American<span className="text-[#13b5a3]"> Credit</span>
+          </h1>
           <div className="text-[11px] text-white/50">
             Available free on all devices
           </div>
@@ -392,7 +318,7 @@ function Modal({ isOpen, onClose, title, children }: ModalProps) {
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-2xl"
+            className="text-gray-400 hover:text-gray-600 text-2xl cursor-pointer"
           >
             ×
           </button>
@@ -688,8 +614,12 @@ export default function HeroSection() {
           />
           {/* Slide content */}
           <div
-            className="relative z-10 mx-auto max-w-7xl flex flex-col md:flex-row items-center px-4 sm:px-6 md:px-10 gap-6 md:gap-12"
-            style={{ paddingTop: 32, paddingBottom: 32, minHeight: "clamp(400px, 70vh, 540px)" }}
+            className="relative z-10 mx-auto max-w-7xl flex flex-col lg:flex-row items-center px-4 sm:px-6 lg:px-10 gap-8 lg:gap-12"
+            style={{
+              paddingTop: "clamp(24px, 5vw, 48px)",
+              paddingBottom: "clamp(24px, 5vw, 48px)",
+              minHeight: "clamp(400px, 70vh, 540px)",
+            }}
           >
             {/* Left */}
             <div className="flex-1 flex flex-col gap-5 text-white">
@@ -705,7 +635,7 @@ export default function HeroSection() {
               </div>
 
               {/* Title */}
-              <h1 className="font-serif text-2xl sm:text-3xl md:text-[42px] leading-tight md:leading-[1.15] font-normal">
+              <h1 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-[42px] leading-tight font-normal">
                 {slide.title[0]}
                 <br />
                 {slide.title[1]}
@@ -722,7 +652,7 @@ export default function HeroSection() {
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3 mt-3">
                 <button
-                  className="px-7 py-3 rounded-lg text-[14px] font-medium tracking-wide transition-all hover:opacity-90 text-white"
+                  className="px-7 py-3 rounded-lg text-[14px] font-medium tracking-wide transition-all hover:opacity-90 text-white cursor-pointer"
                   style={{ backgroundColor: GREEN }}
                 >
                   {slide.cta.primary}
@@ -738,17 +668,33 @@ export default function HeroSection() {
               </div>
 
               {/* Stats */}
-              <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 mt-4 pt-5 border-t border-white/12">
-                {slide.stats.map((s) => (
-                  <div key={s.lbl} className="flex flex-col gap-0.5">
-                    <span className="font-serif text-2xl md:text-[26px]">
-                      {s.num}
-                    </span>
-                    <span className="text-[11px] text-white/50 uppercase tracking-widest">
-                      {s.lbl}
-                    </span>
+              <div className="flex gap-4 sm:gap-6 text-white">
+                {slide.stats.map((stat, idx) => (
+                  <div key={idx}>
+                    <div className="text-xl sm:text-2xl font-bold">
+                      {stat.num}
+                    </div>
+                    <div className="text-xs text-white/60 uppercase tracking-wider">
+                      {stat.lbl}
+                    </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Mobile CTA */}
+              <div className="lg:hidden flex flex-col sm:flex-row gap-3 mt-4">
+                <button
+                  onClick={() => setActiveModal("login")}
+                  className={`${slide.cta.primaryStyle} px-6 py-3 rounded-lg text-sm font-medium transition-colors`}
+                >
+                  {slide.cta.primary}
+                </button>
+                <button
+                  onClick={() => setActiveModal(slide.cta.secondaryModal)}
+                  className="border border-white/30 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors"
+                >
+                  {slide.cta.secondary}
+                </button>
               </div>
             </div>
 

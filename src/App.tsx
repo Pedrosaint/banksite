@@ -15,18 +15,24 @@ import MediaSection from "./components/MediaSection";
 import AboutSection from "./components/AboutSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
-import ProductPage from "./pages/ProductPage";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import ProductPage from "./domain/ProductPage";
+import Login from "./auth/pages/Login";
+import Register from "./auth/pages/Register";
 import DashboardLayout from "./layouts/DashboardLayout";
-import UserHome from "./pages/user/Home";
-import LocalTransfer from "./pages/user/LocalTransfer";
-import InternationalTransfer from "./pages/user/InternationalTransfer";
-import Deposit from "./pages/user/Deposit";
-import Profile from "./pages/user/Profile";
-import AdminHome from "./pages/admin/Home";
+import UserHome from "./domain/user/pages/Home";
+import LocalTransferView from "./domain/user/pages/LocalTransferView";
+import InternationalTransferView from "./domain/user/pages/InternationalTransferView";
+import DepositView from "./domain/user/pages/DepositView";
+import ProfileView from "./domain/user/pages/ProfileView";
+import AdminHome from "./domain/admin/pages/Home";
 
-function ProtectedRoute({ children, allowedRole }: { children: React.ReactNode; allowedRole: "admin" | "user" }) {
+function ProtectedRoute({
+  children,
+  allowedRole,
+}: {
+  children: React.ReactNode;
+  allowedRole: "admin" | "user";
+}) {
   const { isAuthenticated, role } = useSelector((s: RootState) => s.auth);
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   if (role !== allowedRole) return <Navigate to="/login" replace />;
@@ -38,7 +44,14 @@ function HomePage() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["home", "about", "accounts", "loans", "services", "contact"];
+      const sections = [
+        "home",
+        "about",
+        "accounts",
+        "loans",
+        "services",
+        "contact",
+      ];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -80,17 +93,31 @@ function AppRoutes() {
       <Route path="/register" element={<Register />} />
 
       {/* User Portal */}
-      <Route path="/user/dashboard" element={<ProtectedRoute allowedRole="user"><DashboardLayout /></ProtectedRoute>}>
+      <Route
+        path="/user/dashboard"
+        element={
+          <ProtectedRoute allowedRole="user">
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route index element={<Navigate to="home" replace />} />
         <Route path="home" element={<UserHome />} />
-        <Route path="transfer" element={<LocalTransfer />} />
-        <Route path="international-transfer" element={<InternationalTransfer />} />
-        <Route path="deposit" element={<Deposit />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="transfer" element={<LocalTransferView />} />
+        <Route path="international-transfer" element={<InternationalTransferView />} />
+        <Route path="deposit" element={<DepositView />} />
+        <Route path="profile" element={<ProfileView />} />
       </Route>
 
       {/* Admin Portal */}
-      <Route path="/admin/dashboard" element={<ProtectedRoute allowedRole="admin"><DashboardLayout /></ProtectedRoute>}>
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute allowedRole="admin">
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route index element={<Navigate to="home" replace />} />
         <Route path="home" element={<AdminHome />} />
       </Route>
@@ -123,11 +150,12 @@ function SplashScreen({ onFinish }: { onFinish: () => void }) {
     <motion.div
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
-      className="fixed inset-0 bg-[#0a2540] z-[100] flex flex-col items-center justify-center"
+      className="fixed inset-0 bg-[#0a2540] z-100 flex flex-col items-center justify-center"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        z-100
         transition={{ duration: 0.5 }}
         className="text-center"
       >
@@ -143,7 +171,7 @@ function SplashScreen({ onFinish }: { onFinish: () => void }) {
             </svg>
           </div>
           <h1 className="text-3xl font-bold text-white">
-            Nova<span className="text-[#13b5a3]">Trust</span>
+            American<span className="text-[#13b5a3]"> Credit</span>
           </h1>
           <p className="text-gray-500 text-sm mt-1">Credit Union</p>
         </div>
@@ -158,7 +186,13 @@ function SplashScreen({ onFinish }: { onFinish: () => void }) {
             />
           </div>
           <p className="text-[11px] text-gray-500 mt-3">
-            {progress < 30 ? "Loading resources..." : progress < 70 ? "Preparing your experience..." : progress < 100 ? "Almost ready..." : "Welcome!"}
+            {progress < 30
+              ? "Loading resources..."
+              : progress < 70
+                ? "Preparing your experience..."
+                : progress < 100
+                  ? "Almost ready..."
+                  : "Welcome!"}
           </p>
         </div>
       </motion.div>
@@ -167,8 +201,13 @@ function SplashScreen({ onFinish }: { onFinish: () => void }) {
 }
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const handleFinish = useCallback(() => setLoading(false), []);
+  const [loading, setLoading] = useState(() => {
+    return !sessionStorage.getItem("splashScreenShown");
+  });
+  const handleFinish = useCallback(() => {
+    sessionStorage.setItem("splashScreenShown", "true");
+    setLoading(false);
+  }, []);
 
   return (
     <Provider store={store}>
