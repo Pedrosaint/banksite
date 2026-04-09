@@ -107,12 +107,7 @@ export default function LoginForm({
 
           {/* Links */}
           <div className="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
-            <a
-              href="/"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              Back to Home
-            </a>
+            <div />
             <a
               href="/register"
               className="text-[#13b5a3] hover:text-[#0f9e8f] transition-colors font-medium"

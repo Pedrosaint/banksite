@@ -173,11 +173,7 @@ export default function Login() {
   return (
     <div>
       <LoginForm onSubmit={handleSubmit} loading={isLoading} error={error} />
-      <p className="text-center text-gray-500 text-xs mt-6">
-        <Link to="/" className="text-[#13b5a3] hover:underline">
-          Back to Home
-        </Link>
-      </p>
+
 
       {/* OTP Verification Modal */}
       <OTPVerificationModal
