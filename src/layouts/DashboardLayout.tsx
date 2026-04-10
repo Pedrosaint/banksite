@@ -13,6 +13,7 @@ import {
 } from "react-icons/fi";
 import type { RootState } from "../store";
 import { logout } from "../store/authSlice";
+import { getImageUrl } from "../utils/imageUrl";
 
 type NavGroup = {
   label: string;
@@ -89,10 +90,18 @@ function SidebarContent({
 
       <div className="px-4 py-4 border-t border-white/10">
         <div className="flex items-center gap-3 px-2">
-          <div className="w-9 h-9 rounded-full bg-[#13b5a3] flex items-center justify-center text-white text-sm font-bold">
-            {user?.firstName?.[0]}
-            {user?.lastName?.[0]}
-          </div>
+          {user?.profileImageUrl ? (
+            <img
+              src={getImageUrl(user.profileImageUrl)}
+              className="w-9 h-9 rounded-full object-cover border border-white/10"
+              alt="Profile"
+            />
+          ) : (
+            <div className="w-9 h-9 rounded-full bg-[#13b5a3] flex items-center justify-center text-white text-sm font-bold">
+              {user?.firstName?.[0]}
+              {user?.lastName?.[0]}
+            </div>
+          )}
           <div className="min-w-0">
             <div className="text-sm text-white font-medium truncate">
               {user?.firstName} {user?.lastName}
@@ -147,10 +156,9 @@ export default function DashboardLayout() {
   };
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
-    `flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
-      isActive
-        ? "bg-[#13b5a3] text-white font-medium"
-        : "text-gray-400 hover:text-white hover:bg-white/5"
+    `flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${isActive
+      ? "bg-[#13b5a3] text-white font-medium"
+      : "text-gray-400 hover:text-white hover:bg-white/5"
     }`;
 
   return (
@@ -219,10 +227,18 @@ export default function DashboardLayout() {
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-[#13b5a3] flex items-center justify-center text-white text-xs font-bold">
-              {user?.firstName?.[0]}
-              {user?.lastName?.[0]}
-            </div>
+            {user?.profileImageUrl ? (
+              <img
+                src={getImageUrl(user.profileImageUrl)}
+                className="w-8 h-8 rounded-full object-cover object-[center_20%] border border-gray-200"
+                alt="Profile"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-[#13b5a3] flex items-center justify-center text-white text-xs font-bold">
+                {user?.firstName?.[0]}
+                {user?.lastName?.[0]}
+              </div>
+            )}
           </div>
         </header>
 

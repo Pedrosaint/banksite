@@ -6,12 +6,12 @@ import {
   FiDollarSign,
   FiSearch,
   FiEye,
-  FiEdit2,
   FiTrash2,
   FiX,
   FiPlus,
   FiRefreshCw,
   FiAlertTriangle,
+  FiEdit,
 } from "react-icons/fi";
 import { toast } from "sonner";
 import {
@@ -35,7 +35,7 @@ import DeleteUserConfirmationModal from "../components/DeleteUserConfirmationMod
 import GenerateTransactionsModal from "../components/GenerateTransactionsModal";
 
 export default function AdminHome() {
-  const { data: usersData } = useGetAllUsersQuery();
+  const { data: usersData, isLoading } = useGetAllUsersQuery();
   const [updateUser] = useUpdateUserMutation();
   const [updateTransaction, { isLoading: isUpdatingTransaction }] =
     useUpdateTransactionMutation();
@@ -217,80 +217,115 @@ export default function AdminHome() {
                 <th className="px-5 py-3 font-medium">Country</th>
                 <th className="px-5 py-3 font-medium">Account Type</th>
                 <th className="px-5 py-3 font-medium">Phone</th>
-                <th className="px-5 py-3 font-medium">Actions</th>
+                <th className="px-5 py-3 font-medium text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filtered.map((u) => (
-                <tr
-                  key={u.id}
-                  className="border-t border-gray-100 hover:bg-gray-50 transition-colors"
-                >
-                  <td className="px-5 py-3 text-sm text-gray-800">
-                    {u.firstName}
-                  </td>
-                  <td className="px-5 py-3 text-sm text-gray-800">
-                    {u.lastName}
-                  </td>
-                  <td className="px-5 py-3 text-sm text-gray-600">
-                    {u.country}
-                  </td>
-                  <td className="px-5 py-3 text-sm text-gray-600">
-                    {u.accountType}
-                  </td>
-                  <td className="px-5 py-3 text-sm text-gray-600">
-                    {u.phoneNumber}
-                  </td>
-                  <td className="px-5 py-3">
-                    <div className="flex gap-1">
-                      <button
-                        onClick={() => setViewUser(u)}
-                        className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-500 transition-colors"
-                        title="View"
-                      >
-                        <FiEye />
-                      </button>
-                      <button
-                        onClick={() => setEditUser({ ...u })}
-                        className="p-1.5 rounded-lg hover:bg-[#e6f7f5] text-[#13b5a3] transition-colors"
-                        title="Edit"
-                      >
-                        <FiEdit2 />
-                      </button>
-                      <button
-                        onClick={() => setInitiateTransactionUser(u)}
-                        className="p-1.5 rounded-lg hover:bg-green-50 text-green-600 transition-colors"
-                        title="Initiate Transaction"
-                      >
-                        <FiPlus />
-                      </button>
-                      <button
-                        onClick={() => setGenerateTransactionsUser(u)}
-                        className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors"
-                        title="Generate Transactions"
-                      >
-                        <FiRefreshCw />
-                      </button>
-                      <button
-                        onClick={() => setDeleteUserConfirm(u)}
-                        className="p-1.5 rounded-lg hover:bg-red-50 text-red-500 transition-colors"
-                        title="Delete"
-                      >
-                        <FiTrash2 />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {filtered.length === 0 && (
+              {isLoading ? (
+                // Loading state
+                Array.from({ length: 5 }).map((_, i) => (
+                  <tr key={`loading-${i}`} className="border-t border-gray-100">
+                    <td className="px-5 py-6"><div className="h-4 w-24 bg-gray-100 rounded animate-pulse"></div></td>
+                    <td className="px-5 py-6"><div className="h-4 w-24 bg-gray-100 rounded animate-pulse"></div></td>
+                    <td className="px-5 py-6"><div className="h-4 w-24 bg-gray-100 rounded animate-pulse"></div></td>
+                    <td className="px-5 py-6"><div className="h-4 w-24 bg-gray-100 rounded animate-pulse"></div></td>
+                    <td className="px-5 py-6"><div className="h-4 w-24 bg-gray-100 rounded animate-pulse"></div></td>
+                    <td className="px-5 py-6"><div className="h-4 w-32 bg-gray-100 rounded animate-pulse"></div></td>
+                  </tr>
+                ))
+              ) : filtered.length === 0 ? (
+                // Empty state
                 <tr>
-                  <td
-                    colSpan={6}
-                    className="px-5 py-10 text-center text-gray-400 text-sm"
-                  >
-                    No users found
+                  <td colSpan={6} className="px-5 py-20 text-center">
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex flex-col items-center justify-center max-w-xs mx-auto"
+                    >
+                      <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 text-gray-300">
+                        <FiUsers size={32} />
+                      </div>
+                      <h4 className="text-[#0a2540] font-bold mb-1">No matches found</h4>
+                      <p className="text-gray-400 text-sm">
+                        {search
+                          ? `We couldn't find any users matching "${search}"`
+                          : "Your user database is currently empty"}
+                      </p>
+                      {search && (
+                        <button
+                          onClick={() => setSearch("")}
+                          className="mt-4 text-[#13b5a3] text-sm font-bold hover:underline"
+                        >
+                          Clear search filters
+                        </button>
+                      )}
+                    </motion.div>
                   </td>
                 </tr>
+              ) : (
+                filtered.map((u) => (
+                  <tr
+                    key={u.id}
+                    className="border-t border-gray-100 hover:bg-gray-50 transition-colors group"
+                  >
+                    <td className="px-5 py-4 text-sm font-medium text-[#0a2540]">
+                      {u.firstName}
+                    </td>
+                    <td className="px-5 py-4 text-sm font-medium text-[#0a2540]">
+                      {u.lastName}
+                    </td>
+                    <td className="px-5 py-4 text-sm text-gray-600">
+                      {u.country}
+                    </td>
+                    <td className="px-5 py-4 text-sm">
+                      <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">
+                        {u.accountType}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 text-sm text-gray-500 font-mono">
+                      {u.phoneNumber}
+                    </td>
+                    <td className="px-5 py-4 text-right">
+                      <div className="flex gap-1 justify-end transition-opacity">
+                        <button
+                          onClick={() => setViewUser(u)}
+                          className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-500 transition-colors cursor-pointer"
+                          title="View"
+                        >
+                          <FiEye />
+                        </button>
+                        <button
+                          onClick={() => setEditUser({ ...u })}
+                          className="p-1.5 rounded-lg hover:bg-[#e6f7f5] text-[#13b5a3] transition-colors cursor-pointer"
+                          title="Edit"
+                        >
+                          <FiEdit />
+                        </button>
+                        <button
+                          onClick={() => setInitiateTransactionUser(u)}
+                          className="p-1.5 rounded-lg hover:bg-green-50 text-green-600 transition-colors cursor-pointer"
+                          title="Initiate Transaction"
+                        >
+                          <FiPlus />
+                        </button>
+                        <button
+                          onClick={() => setGenerateTransactionsUser(u)}
+                          className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors cursor-pointer"
+                          title="Generate Transactions"
+                        >
+                          <FiRefreshCw />
+                        </button>
+                        <button
+                          onClick={() => setDeleteUserConfirm(u)}
+                          className="p-1.5 rounded-lg hover:bg-red-50 text-red-500 transition-colors cursor-pointer"
+                          title="Delete"
+                        >
+                          <FiTrash2 />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
@@ -401,9 +436,10 @@ export default function AdminHome() {
                     ) : (
                       <input
                         value={(editUser as any)[key] || ""}
-                        onChange={(e) =>
-                          setEditUser({ ...editUser, [key]: e.target.value } as any)
-                        }
+                        onChange={(e) => {
+                          const val = key === "phone" ? e.target.value.replace(/[^0-9+]/g, "") : e.target.value;
+                          setEditUser({ ...editUser, [key]: val } as any);
+                        }}
                         className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3]"
                       />
                     )}

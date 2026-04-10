@@ -1,4 +1,5 @@
 import { useCurrentUser } from "../hooks/useCurrentUser";
+import { getImageUrl } from "../../../utils/imageUrl";
 
 export default function ProfileView() {
   const { user, balance } = useCurrentUser();
@@ -48,9 +49,9 @@ export default function ProfileView() {
       <div className="bg-[#0a2540] rounded-md p-6 flex items-center gap-5 mb-6 text-white">
         {user.profileImageUrl ? (
           <img
-            src={user.profileImageUrl}
+            src={getImageUrl(user.profileImageUrl)}
             alt="Profile"
-            className="w-16 h-16 rounded-full object-cover shrink-0"
+            className="w-16 h-16 rounded-full object-cover object-[center_20%] shrink-0"
           />
         ) : (
           <div className="w-16 h-16 rounded-full bg-[#13b5a3] flex items-center justify-center text-2xl font-bold shrink-0">

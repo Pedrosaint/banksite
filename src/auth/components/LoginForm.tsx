@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 interface LoginFormProps {
   onSubmit: (email: string, password: string) => void;
@@ -37,6 +38,11 @@ export default function LoginForm({
           </h1>
           <p className="text-gray-400 mt-2 text-sm">
             Sign in to your banking portal
+          </p>
+          <p className="text-center text-gray-500 text-xs mt-2">
+            <Link to="/" className="text-[#13b5a3] hover:underline">
+              ← Back to website
+            </Link>
           </p>
         </div>
 

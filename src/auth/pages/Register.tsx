@@ -8,8 +8,9 @@ import {
   FiLock,
   FiPhone,
   FiMapPin,
-  FiEye,
   FiEyeOff,
+  FiX,
+  FiEye,
 } from "react-icons/fi";
 import { useCreateUserMutation } from "../api/authApi";
 import { toast } from "sonner";
@@ -28,6 +29,7 @@ export default function Register() {
     password: "",
     confirmPassword: "",
   });
+  const [preview, setPreview] = useState<string | null>(null);
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -36,8 +38,22 @@ export default function Register() {
   const navigate = useNavigate();
   const [createUserMutation, { isLoading }] = useCreateUserMutation();
 
-  const update = (k: string, v: string | File | null) =>
+  const update = (k: string, v: string | File | null) => {
+    if (k === "profilePicture") {
+      const file = v as File | null;
+      if (file) {
+        setPreview(URL.createObjectURL(file));
+      } else {
+        setPreview(null);
+      }
+    }
     setForm({ ...form, [k]: v });
+  };
+
+  const removeProfilePicture = () => {
+    setForm({ ...form, profilePicture: null });
+    setPreview(null);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,7 +114,7 @@ export default function Register() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-[#0a2540]/20 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#0a2540]/90 flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -267,7 +283,7 @@ export default function Register() {
                   <input
                     type="tel"
                     value={form.phone}
-                    onChange={(e) => update("phone", e.target.value)}
+                    onChange={(e) => update("phone", e.target.value.replace(/[^0-9+]/g, ""))}
                     required
                     className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3]"
                     placeholder="+1 (555) 000-0000"
@@ -364,15 +380,34 @@ export default function Register() {
                 Profile Picture
               </label>
               <div className="relative">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) =>
-                    update("profilePicture", e.target.files?.[0] || null)
-                  }
-                  required
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#13b5a3] file:text-white hover:file:bg-[#0f9e8f]"
-                />
+                {preview ? (
+                  <div className="relative inline-block mt-2">
+                    <img
+                      src={preview}
+                      alt="Profile preview"
+                      className="w-24 h-24 rounded-2xl object-cover border-2 border-[#13b5a3] p-1 bg-white shadow-sm"
+                    />
+                    <button
+                      type="button"
+                      onClick={removeProfilePicture}
+                      className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-1.5 shadow-lg hover:bg-red-600 transition-all hover:scale-110 active:scale-95 cursor-pointer border-2 border-white"
+                      title="Remove image"
+                    >
+                      <FiX size={14} />
+                    </button>
+                    <p className="text-[10px] text-[#13b5a3] font-bold uppercase tracking-wider mt-2 ml-1">Ready to upload</p>
+                  </div>
+                ) : (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) =>
+                      update("profilePicture", e.target.files?.[0] || null)
+                    }
+                    required
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#13b5a3] file:text-white hover:file:bg-[#0f9e8f] cursor-pointer"
+                  />
+                )}
               </div>
             </div>
 

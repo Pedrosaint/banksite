@@ -27,6 +27,7 @@ import DepositView from "./domain/user/pages/DepositView";
 import ProfileView from "./domain/user/pages/ProfileView";
 import AdminHome from "./domain/admin/pages/Home";
 import CreateAdmin from "./domain/admin/pages/CreateAdmin";
+import NotFound from "./pages/NotFound";
 
 function ProtectedRoute({
   children,
@@ -126,6 +127,9 @@ function AppRoutes() {
 
       {/* Hidden Admin Creation Route */}
       <Route path="/admin-system-auth-create" element={<CreateAdmin />} />
+
+      {/* 404 Route */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
