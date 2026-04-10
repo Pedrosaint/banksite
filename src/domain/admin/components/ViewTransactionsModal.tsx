@@ -106,35 +106,35 @@ export default function ViewTransactionsModal({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center p-4 overflow-y-auto"
         onClick={onClose}
       >
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          className="bg-white rounded-xl w-full max-w-6xl max-h-[85vh] overflow-hidden flex flex-col"
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          className="bg-white rounded-xl w-full max-w-6xl my-8 overflow-hidden flex flex-col shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           {/* HEADER */}
-          <div className="sticky top-0 bg-white border-b border-gray-100 p-6 flex justify-between items-center z-10">
+          <div className="bg-white border-b border-gray-100 p-6 flex justify-between items-center">
             <h3 className="text-lg font-bold text-[#0a2540]">
               User Transactions
             </h3>
 
             <button
               onClick={onClose}
-              className="text-gray-400 hover:bg-gray-100 p-2 rounded-full"
+              className="text-gray-400 hover:bg-gray-100 p-2 rounded-full transition-colors cursor-pointer"
             >
-              <FiX />
+              <FiX size={20} />
             </button>
           </div>
 
           {/* MAIN GRID */}
-          <div className="flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
+          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
 
             {/* LEFT SIDE */}
-            <div className="p-6 border-r border-gray-100 overflow-y-auto">
+            <div className="p-6 border-r border-gray-100">
               {/* FILTERS */}
               <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
                 <h3 className="font-bold text-[#0a2540] text-lg">
@@ -149,7 +149,7 @@ export default function ViewTransactionsModal({
                         e.target.value as "date" | "amount" | "status"
                       )
                     }
-                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm"
+                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white"
                   >
                     <option value="date">Date</option>
                     <option value="amount">Amount</option>
@@ -162,7 +162,7 @@ export default function ViewTransactionsModal({
                         sortOrder === "asc" ? "desc" : "asc"
                       )
                     }
-                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm flex items-center gap-2"
+                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm flex items-center gap-2 bg-white hover:bg-gray-50 transition-colors cursor-pointer"
                   >
                     {sortOrder === "asc" ? "Oldest" : "Newest"}
                     {sortOrder === "asc" ? <FiArrowUp /> : <FiArrowDown />}
@@ -172,21 +172,28 @@ export default function ViewTransactionsModal({
 
               {/* LIST */}
               {loading ? (
-                <div className="text-center py-12">Loading...</div>
+                <div className="text-center py-20 flex flex-col items-center gap-3">
+                  <div className="w-10 h-10 border-4 border-[#13b5a3] border-t-transparent rounded-full animate-spin" />
+                  <p className="text-gray-400 text-sm">Loading transactions...</p>
+                </div>
               ) : sortedTransactions.length === 0 ? (
-                <div className="text-center py-12 text-gray-500">
-                  No transactions found
+                <div className="text-center py-20">
+                  <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-gray-300">
+                    <FiFileText size={32} />
+                  </div>
+                  <h4 className="text-[#0a2540] font-bold">No transactions found</h4>
+                  <p className="text-gray-400 text-sm">This user hasn't made any transfers yet.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
                   {sortedTransactions.map((transaction) => (
                     <div
                       key={transaction.id}
-                      className="p-4 rounded-xl border border-gray-200 hover:shadow-sm flex justify-between"
+                      className="p-4 rounded-xl border border-gray-100 hover:border-[#13b5a3]/30 hover:shadow-sm transition-all flex justify-between bg-white"
                     >
                       <div className="flex gap-4">
                         <div
-                          className={`p-3 rounded-xl ${getStatusColor(
+                          className={`p-3 rounded-xl flex items-center justify-center h-fit ${getStatusColor(
                             transaction.status
                           )}`}
                         >
@@ -194,22 +201,22 @@ export default function ViewTransactionsModal({
                         </div>
 
                         <div>
-                          <p className="font-semibold">
-                            {transaction.description}
+                          <p className="font-semibold text-gray-900 capitalize">
+                            {transaction.description || transaction.type}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-gray-400 mt-1">
                             {formatDate(transaction.createdAt)}
                           </p>
                         </div>
                       </div>
 
                       <div className="text-right">
-                        <p className="font-bold text-lg">
+                        <p className="font-bold text-lg text-[#0a2540]">
                           {formatAmount(transaction.amount)}
                         </p>
 
                         <span
-                          className={`text-xs px-2 py-1 rounded-full ${getStatusColor(
+                          className={`inline-block mt-1 text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider ${getStatusColor(
                             transaction.status
                           )}`}
                         >
@@ -221,9 +228,9 @@ export default function ViewTransactionsModal({
                             onClick={() =>
                               setEditTransaction(transaction)
                             }
-                            className="block mt-2 text-xs text-[#13b5a3]"
+                            className="block mt-2 ml-auto text-xs text-[#13b5a3] font-bold hover:underline cursor-pointer"
                           >
-                            Edit
+                            Modify
                           </button>
                         )}
                       </div>
@@ -234,38 +241,50 @@ export default function ViewTransactionsModal({
             </div>
 
             {/* RIGHT SIDE */}
-            <div className="p-6 bg-[#fafafa] sticky top-0 h-full">
+            <div className="p-8 bg-[#fafafa]">
               <div className="text-center">
                 {user.profileImageUrl ? (
                   <img
                     src={getImageUrl(user.profileImageUrl)}
-                    className="w-20 h-20 rounded-full object-cover object-[center_20%] mx-auto"
+                    className="w-24 h-24 rounded-full object-cover object-[center_20%] mx-auto border-4 border-white shadow-sm"
                   />
                 ) : (
-                  <div className="w-20 h-20 rounded-full bg-[#13b5a3] flex items-center justify-center text-white text-xl mx-auto">
+                  <div className="w-24 h-24 rounded-full bg-[#13b5a3] flex items-center justify-center text-white text-3xl font-bold mx-auto border-4 border-white shadow-sm">
                     {user.firstName?.[0]}
                     {user.lastName?.[0]}
                   </div>
                 )}
 
-                <h2 className="mt-4 font-bold">
+                <h2 className="mt-5 font-bold text-xl text-[#0a2540]">
                   {user.firstName} {user.lastName}
                 </h2>
                 <p className="text-sm text-gray-500">{user.email}</p>
               </div>
 
-              <div className="mt-6 bg-white p-4 rounded-lg text-center">
-                <p className="text-xs text-gray-400">Balance</p>
-                <p className="text-xl font-bold text-[#13b5a3]">
+              <div className="mt-8 bg-white p-6 rounded-2xl text-center shadow-sm border border-gray-100">
+                <p className="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">Total Balance</p>
+                <p className="text-2xl font-black text-[#13b5a3]">
                   {formatAmount(user.balance)}
                 </p>
               </div>
 
-              <div className="mt-6 text-sm space-y-2">
-                <p>Account: {user.accountNumber || "—"}</p>
-                <p>Type: {user.accountType || "—"}</p>
-                <p>Phone: {user.phoneNumber || "—"}</p>
-                <p>Country: {user.country || "—"}</p>
+              <div className="mt-8 space-y-4">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-400">Account Number</span>
+                  <span className="font-mono font-medium text-[#0a2540]">{user.accountNumber || "—"}</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-400">Account Type</span>
+                  <span className="font-medium text-[#0a2540] capitalize">{user.accountType || "—"}</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-400">Phone Number</span>
+                  <span className="font-medium text-[#0a2540]">{user.phoneNumber || "—"}</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-400">Country</span>
+                  <span className="font-medium text-[#0a2540]">{user.country || "—"}</span>
+                </div>
               </div>
             </div>
           </div>

@@ -7,6 +7,7 @@ import {
 } from "../api/userApi";
 import type { TransferRequest, TransferResponse } from "../types";
 import OTPVerificationModal from "../../../auth/components/OTPVerificationModal";
+import TransactionStatusModal from "../../../components/TransactionStatusModal";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { toast } from "sonner";
 
@@ -122,23 +123,20 @@ export default function InternationalTransferView() {
           type: "success",
           message: msg,
         });
-        toast.success(msg);
         setForm(initialForm);
       } else {
-        const msg = result.message || "Transfer failed.";
+        const msg = result.error || result.message || "Transfer failed.";
         setStatus({
           type: "error",
           message: msg,
         });
-        toast.error(msg);
       }
     } catch (err: any) {
-      const msg = err.data?.message || "An error occurred. Please try again.";
+      const msg = err.data?.error || err.data?.message || err.message || "An error occurred. Please try again.";
       setStatus({
         type: "error",
         message: msg,
       });
-      toast.error(msg);
     }
   };
 
@@ -157,17 +155,14 @@ export default function InternationalTransferView() {
           type: "success",
           message: msg,
         });
-        toast.success(msg);
         setForm(initialForm);
       } else {
-        const msg = result.message || "Invalid verification code.";
+        const msg = result.error || result.message || "Invalid verification code.";
         setOtpError(msg);
-        toast.error(msg);
       }
     } catch (err: any) {
-      const msg = err.data?.message || "Verification failed.";
+      const msg = err.data?.error || err.data?.message || err.message || "Verification failed.";
       setOtpError(msg);
-      toast.error(msg);
     }
   };
 
@@ -199,17 +194,6 @@ export default function InternationalTransferView() {
         </div>
 
         <div className="bg-white rounded-md shadow-sm border border-gray-200 p-6">
-          {status && (
-            <div
-              className={`p-4 rounded-md mb-6 text-sm ${status.type === "success"
-                ? "bg-green-50 text-green-700 border border-green-200"
-                : "bg-red-50 text-red-700 border border-red-200"
-                }`}
-            >
-              {status.message}
-            </div>
-          )}
-
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Recipient Name */}
@@ -406,6 +390,13 @@ export default function InternationalTransferView() {
         onResendOTP={handleResendOTP}
         resendLoading={isResending}
         countdown={countdown}
+      />
+      <TransactionStatusModal
+        isOpen={!!status}
+        onClose={() => setStatus(null)}
+        type={status?.type === "success" ? "success" : "error"}
+        title={status?.type === "success" ? "Transfer Complete" : "Transfer Failed"}
+        message={status?.message || ""}
       />
     </>
   );

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FiUsers,
@@ -12,6 +13,7 @@ import {
   FiRefreshCw,
   FiAlertTriangle,
   FiEdit,
+  FiMoreVertical,
 } from "react-icons/fi";
 import { toast } from "sonner";
 import {
@@ -33,6 +35,149 @@ import ViewTransactionsModal from "../components/ViewTransactionsModal";
 import InitiateTransactionModal from "../components/InitiateTransactionModal";
 import DeleteUserConfirmationModal from "../components/DeleteUserConfirmationModal";
 import GenerateTransactionsModal from "../components/GenerateTransactionsModal";
+
+function UserActionDropdown({
+  u,
+  setViewUser,
+  setEditUser,
+  setInitiateTransactionUser,
+  setGenerateTransactionsUser,
+  setDeleteUserConfirm,
+}: {
+  u: User;
+  setViewUser: (u: User) => void;
+  setEditUser: (u: User) => void;
+  setInitiateTransactionUser: (u: User) => void;
+  setGenerateTransactionsUser: (u: User) => void;
+  setDeleteUserConfirm: (u: User) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [coords, setCoords] = useState({ top: 0, left: 0 });
+
+  useEffect(() => {
+    const updateCoords = () => {
+      if (buttonRef.current) {
+        const rect = buttonRef.current.getBoundingClientRect();
+        setCoords({
+          top: rect.bottom + 5,
+          left: rect.right - 224,
+        });
+      }
+    };
+
+    if (open) {
+      updateCoords();
+      window.addEventListener("scroll", updateCoords, true);
+      window.addEventListener("resize", updateCoords);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", updateCoords, true);
+      window.removeEventListener("resize", updateCoords);
+    };
+  }, [open]);
+
+  return (
+    <div className="inline-block">
+      <button
+        ref={buttonRef}
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(!open);
+        }}
+        className="p-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-[#0a2540] transition-all cursor-pointer"
+      >
+        <FiMoreVertical className="text-lg" />
+      </button>
+
+      {open &&
+        createPortal(
+          <>
+            <div
+              className="fixed inset-0 z-[60]"
+              onClick={() => setOpen(false)}
+            />
+            <div
+              style={{
+                top: `${coords.top}px`,
+                left: `${coords.left}px`,
+              }}
+              className="fixed w-56 bg-white rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-gray-100 py-2 z-[70] overflow-hidden transform origin-top-right animate-in fade-in zoom-in-95 duration-100"
+            >
+              <button
+                onClick={() => {
+                  setViewUser(u);
+                  setOpen(false);
+                }}
+                className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 flex items-center gap-3 transition-colors cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 font-bold">
+                  <FiEye />
+                </div>
+                <span className="font-semibold">View Transactions</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setEditUser({ ...u });
+                  setOpen(false);
+                }}
+                className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-[#e6f7f5] hover:text-[#13b5a3] flex items-center gap-3 transition-colors cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-lg bg-[#e6f7f5] flex items-center justify-center text-[#13b5a3] font-bold">
+                  <FiEdit />
+                </div>
+                <span className="font-semibold">Edit Profile</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setInitiateTransactionUser(u);
+                  setOpen(false);
+                }}
+                className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 flex items-center gap-3 transition-colors cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center text-green-600 font-bold">
+                  <FiPlus />
+                </div>
+                <span className="font-semibold">Initiate Transaction</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setGenerateTransactionsUser(u);
+                  setOpen(false);
+                }}
+                className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 flex items-center gap-3 transition-colors cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600 font-bold">
+                  <FiRefreshCw />
+                </div>
+                <span className="font-semibold">Auto-Generate Data</span>
+              </button>
+
+              <div className="border-t border-gray-100 my-1" />
+
+              <button
+                onClick={() => {
+                  setDeleteUserConfirm(u);
+                  setOpen(false);
+                }}
+                className="w-full px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center font-bold">
+                  <FiTrash2 />
+                </div>
+                <span className="font-semibold text-red-600">Delete User</span>
+              </button>
+            </div>
+          </>,
+          document.body
+        )}
+    </div>
+  );
+}
 
 export default function AdminHome() {
   const { data: usersData, isLoading } = useGetAllUsersQuery();
@@ -217,6 +362,7 @@ export default function AdminHome() {
                 <th className="px-5 py-3 font-medium">Country</th>
                 <th className="px-5 py-3 font-medium">Account Type</th>
                 <th className="px-5 py-3 font-medium">Phone</th>
+                <th className="px-5 py-3 font-medium text-center">Status</th>
                 <th className="px-5 py-3 font-medium text-right">Actions</th>
               </tr>
             </thead>
@@ -230,13 +376,14 @@ export default function AdminHome() {
                     <td className="px-5 py-6"><div className="h-4 w-24 bg-gray-100 rounded animate-pulse"></div></td>
                     <td className="px-5 py-6"><div className="h-4 w-24 bg-gray-100 rounded animate-pulse"></div></td>
                     <td className="px-5 py-6"><div className="h-4 w-24 bg-gray-100 rounded animate-pulse"></div></td>
+                    <td className="px-5 py-6"><div className="h-4 w-24 bg-gray-100 rounded animate-pulse"></div></td>
                     <td className="px-5 py-6"><div className="h-4 w-32 bg-gray-100 rounded animate-pulse"></div></td>
                   </tr>
                 ))
               ) : filtered.length === 0 ? (
                 // Empty state
                 <tr>
-                  <td colSpan={6} className="px-5 py-20 text-center">
+                  <td colSpan={7} className="px-5 py-20 text-center">
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -285,44 +432,30 @@ export default function AdminHome() {
                     <td className="px-5 py-4 text-sm text-gray-500 font-mono">
                       {u.phoneNumber}
                     </td>
-                    <td className="px-5 py-4 text-right">
-                      <div className="flex gap-1 justify-end transition-opacity">
-                        <button
-                          onClick={() => setViewUser(u)}
-                          className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-500 transition-colors cursor-pointer"
-                          title="View"
-                        >
-                          <FiEye />
-                        </button>
-                        <button
-                          onClick={() => setEditUser({ ...u })}
-                          className="p-1.5 rounded-lg hover:bg-[#e6f7f5] text-[#13b5a3] transition-colors cursor-pointer"
-                          title="Edit"
-                        >
-                          <FiEdit />
-                        </button>
-                        <button
-                          onClick={() => setInitiateTransactionUser(u)}
-                          className="p-1.5 rounded-lg hover:bg-green-50 text-green-600 transition-colors cursor-pointer"
-                          title="Initiate Transaction"
-                        >
-                          <FiPlus />
-                        </button>
-                        <button
-                          onClick={() => setGenerateTransactionsUser(u)}
-                          className="p-1.5 rounded-lg hover:bg-purple-50 text-purple-600 transition-colors cursor-pointer"
-                          title="Generate Transactions"
-                        >
-                          <FiRefreshCw />
-                        </button>
-                        <button
-                          onClick={() => setDeleteUserConfirm(u)}
-                          className="p-1.5 rounded-lg hover:bg-red-50 text-red-500 transition-colors cursor-pointer"
-                          title="Delete"
-                        >
-                          <FiTrash2 />
-                        </button>
+                    <td className="px-5 py-4">
+                      <div className="flex justify-center">
+                        {u.isSuspicious ? (
+                          <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider border border-red-100">
+                            <div className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse" />
+                            Suspicious
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 bg-green-50 text-green-600 px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider border border-green-100">
+                            <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                            Active
+                          </span>
+                        )}
                       </div>
+                    </td>
+                    <td className="px-5 py-4 text-right">
+                      <UserActionDropdown
+                        u={u}
+                        setViewUser={setViewUser}
+                        setEditUser={setEditUser}
+                        setInitiateTransactionUser={setInitiateTransactionUser}
+                        setGenerateTransactionsUser={setGenerateTransactionsUser}
+                        setDeleteUserConfirm={setDeleteUserConfirm}
+                      />
                     </td>
                   </tr>
                 ))

@@ -24,6 +24,7 @@ export interface DepositRequest {
 export interface DepositResponse {
   success: boolean;
   message: string;
+  error?: string;
   transactionId?: string;
 }
 
@@ -44,6 +45,7 @@ export interface TransferRequest {
 export interface TransferResponse {
   success: boolean;
   message: string;
+  error?: string;
   transferId?: string;
   transfer?: {
     id: string;
@@ -95,6 +97,7 @@ export interface TransferVerifyOTPRequest {
 export interface TransferVerifyOTPResponse {
   success: boolean;
   message: string;
+  error?: string;
   newBalance: number;
 }
 
