@@ -177,9 +177,9 @@ export default function GenerateTransactionsModal({
               </label>
               <input
                 type="number"
-                value={formData.count}
+                value={formData.count === 0 ? "" : formData.count}
                 onChange={(e) =>
-                  handleInputChange("count", parseInt(e.target.value) || 0)
+                  handleInputChange("count", e.target.value === "" ? 0 : parseInt(e.target.value))
                 }
                 min="1"
                 max="100"

@@ -101,11 +101,11 @@ export default function InitiateTransactionModal({ user, isOpen, onClose, onInit
               <div className="relative">
                 <input
                   type="number"
-                  value={formData.amount || ""}
-                  onChange={(e) => handleInputChange("amount", parseFloat(e.target.value) || 0)}
+                  value={formData.amount === 0 ? "" : formData.amount}
+                  onChange={(e) => handleInputChange("amount", e.target.value === "" ? 0 : parseFloat(e.target.value))}
                   placeholder="0.00"
                   required
-                  min="1"
+                  min="0.01"
                   step="0.01"
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
                 />

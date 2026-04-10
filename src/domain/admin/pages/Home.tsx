@@ -13,6 +13,7 @@ import {
   FiRefreshCw,
   FiAlertTriangle,
 } from "react-icons/fi";
+import { toast } from "sonner";
 import {
   useGetAllUsersQuery,
   useUpdateUserMutation,
@@ -71,8 +72,10 @@ export default function AdminHome() {
     try {
       await updateUser({ userId: editUser.id, userData: editUser }).unwrap();
       setEditUser(null);
+      toast.success("User updated successfully");
     } catch (error: unknown) {
       console.error("Failed to update user:", error);
+      toast.error("Failed to update user. Please try again.");
     }
   };
 
@@ -86,13 +89,11 @@ export default function AdminHome() {
         transactionData,
       }).unwrap();
       if (result.success && result.transaction) {
-        // Refresh transactions data
-        // This will trigger a refetch of the transactions query
-        // The ViewTransactionsModal will automatically update with the new data
+        toast.success("Transaction updated successfully");
       }
     } catch (error: unknown) {
       console.error("Failed to update transaction:", error);
-      // Handle error (show toast, notification, etc.)
+      toast.error("Failed to update transaction. Please try again.");
     }
   };
 
@@ -106,14 +107,12 @@ export default function AdminHome() {
         transactionData,
       }).unwrap();
       if (result.success) {
-        // Show success message and close modal
         setInitiateTransactionUser(null);
-        // Optionally refresh user data to show new balance
-        // You could refetch user data here if needed
+        toast.success("Funds initiated successfully");
       }
     } catch (error: unknown) {
       console.error("Failed to initiate transaction:", error);
-      // Handle error (show toast, notification, etc.)
+      toast.error("Failed to initiate transaction. Please try again.");
     }
   };
 
@@ -121,13 +120,12 @@ export default function AdminHome() {
     try {
       const result = await deleteUser(userId).unwrap();
       if (result.success) {
-        // Close confirmation modal
         setDeleteUserConfirm(null);
-        // The getAllUsers query will automatically refetch and update the UI
+        toast.success("User deleted successfully");
       }
     } catch (error: unknown) {
       console.error("Failed to delete user:", error);
-      // Handle error (show toast, notification, etc.)
+      toast.error("Failed to delete user. Please try again.");
     }
   };
 
@@ -141,13 +139,12 @@ export default function AdminHome() {
         transactionData,
       }).unwrap();
       if (result.success) {
-        // Close modal
         setGenerateTransactionsUser(null);
-        // Optionally refresh transactions or show success message
+        toast.success("Dummy transactions generated successfully");
       }
     } catch (error: unknown) {
       console.error("Failed to generate transactions:", error);
-      // Handle error (show toast, notification, etc.)
+      toast.error("Failed to generate transactions. Please try again.");
     }
   };
 
@@ -438,11 +435,11 @@ export default function AdminHome() {
                   </label>
                   <input
                     type="number"
-                    value={editUser.balance}
+                    value={editUser.balance === 0 ? "" : editUser.balance}
                     onChange={(e) =>
                       setEditUser({
                         ...editUser,
-                        balance: Number(e.target.value),
+                        balance: e.target.value === "" ? 0 : Number(e.target.value),
                       })
                     }
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3]"
