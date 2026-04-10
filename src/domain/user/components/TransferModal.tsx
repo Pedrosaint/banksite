@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiX, FiDollarSign, FiUser, FiBriefcase, FiSend } from "react-icons/fi";
+import { toast } from "sonner";
 import {
   useVerifyTransferOTPMutation,
   useResendTransferOTPMutation,
@@ -56,10 +57,11 @@ export default function TransferModal({
         setPendingTransferId(result.transfer.id);
         setShowOTPModal(true);
         startCountdown();
+        toast.info("A verification code has been sent to your email.");
       }
     } catch (error) {
+      toast.error("Transfer failed. Please check your details and try again.");
       console.error("Transfer submission failed:", error);
-      // Handle error - maybe show error message
     }
   };
 
@@ -78,18 +80,18 @@ export default function TransferModal({
 
       if (result.success) {
         // OTP verified, transfer completed successfully
+        toast.success("Transfer completed successfully!");
         setShowOTPModal(false);
         onClose();
-        // Optionally refresh user data to show new balance
-        // You could call a callback to refresh user data
       } else {
-        setOtpError(result.message || "Transfer verification failed");
+        const msg = result.message || "Transfer verification failed";
+        setOtpError(msg);
+        toast.error(msg);
       }
     } catch (err: unknown) {
-      setOtpError(
-        (err as any)?.data?.message ||
-          "Transfer verification failed. Please try again.",
-      );
+      const msg = (err as any)?.data?.message || "Transfer verification failed. Please try again.";
+      setOtpError(msg);
+      toast.error(msg);
     }
   };
 
@@ -103,13 +105,12 @@ export default function TransferModal({
 
       if (result.success) {
         startCountdown();
-        // Optionally show success message
-        console.log("OTP resent successfully");
+        toast.success("Verification code resent.");
       } else {
-        // Handle error
-        console.error("Failed to resend OTP:", result.message);
+        toast.error(result.message || "Failed to resend code.");
       }
     } catch (error) {
+      toast.error("Failed to resend code. Please try again.");
       console.error("Failed to resend OTP:", error);
     }
   };

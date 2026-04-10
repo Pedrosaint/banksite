@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 
 const DepositView = () => {
   const [amount, setAmount] = useState("");
@@ -8,6 +9,7 @@ const DepositView = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setShowModal(true);
+    toast.info("Please follow the instructions in the modal to complete your deposit.");
   };
 
   const closeModal = () => {

@@ -12,6 +12,7 @@ import {
   FiEyeOff,
 } from "react-icons/fi";
 import { useCreateUserMutation } from "../api/authApi";
+import { toast } from "sonner";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -43,11 +44,15 @@ export default function Register() {
     setError("");
 
     if (form.password.length < 4) {
-      setError("Password must be at least 4 characters.");
+      const msg = "Password must be at least 4 characters.";
+      setError(msg);
+      toast.error(msg);
       return;
     }
-    if (form.password !== form.confirmPassword) {
-      setError("Passwords do not match.");
+    if (form.confirmPassword !== form.password) {
+      const msg = "Passwords do not match.";
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
@@ -76,11 +81,16 @@ export default function Register() {
       if (result.success) {
         setSuccess(true);
         setHasSubmitted(true);
+        toast.success("Account created successfully!");
       } else {
-        setError(result.message || "Registration failed. Please try again.");
+        const msg = result.message || "Registration failed. Please try again.";
+        setError(msg);
+        toast.error(msg);
       }
     } catch (error: any) {
-      setError(error.data?.message || "Registration failed. Please try again.");
+      const msg = error.data?.message || "Registration failed. Please try again.";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

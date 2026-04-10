@@ -12,6 +12,8 @@ import type {
   DeleteUserResponse,
   GenerateTransactionsRequest,
   GenerateTransactionsResponse,
+  CreateAdminRequest,
+  CreateAdminResponse,
 } from "../types";
 
 export const adminApi = createApi({
@@ -79,6 +81,13 @@ export const adminApi = createApi({
         body: transactionData,
       }),
     }),
+    createAdmin: builder.mutation<CreateAdminResponse, CreateAdminRequest>({
+      query: (adminData) => ({
+        url: "admin/create",
+        method: "POST",
+        body: adminData,
+      }),
+    }),
   }),
 });
 
@@ -90,4 +99,5 @@ export const {
   useInitiateTransactionMutation,
   useDeleteUserMutation,
   useGenerateTransactionsMutation,
+  useCreateAdminMutation,
 } = adminApi;

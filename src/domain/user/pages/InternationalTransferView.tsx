@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import {
   useTransferMutation,
   useVerifyTransferOTPMutation,
   useResendTransferOTPMutation
 } from "../api/userApi";
-import type { RootState } from "../../../store";
 import type { TransferRequest, TransferResponse } from "../types";
 import OTPVerificationModal from "../../../auth/components/OTPVerificationModal";
+import { useCurrentUser } from "../hooks/useCurrentUser";
+import { toast } from "sonner";
 
 const CURRENCIES = ["USD", "EUR", "GBP", "CAD", "AUD", "JPY", "CHF", "CNY"];
 const COUNTRIES = [
@@ -40,7 +40,7 @@ const initialForm: Partial<TransferRequest> = {
 };
 
 export default function InternationalTransferView() {
-  const user = useSelector((s: RootState) => s.auth.user);
+  const { user, balance } = useCurrentUser();
   const [form, setForm] = useState(initialForm);
   const [transfer, { isLoading }] = useTransferMutation();
   const [verifyOTP, { isLoading: isVerifying }] = useVerifyTransferOTPMutation();
@@ -112,27 +112,33 @@ export default function InternationalTransferView() {
         setPendingTransferId(result.transferId);
         setShowOTPModal(true);
         startCountdown();
+        toast.info("A verification code has been sent to your email.");
         return;
       }
 
       if (result.success) {
+        const msg = "International transfer initiated! Processing time is 3–5 business days.";
         setStatus({
           type: "success",
-          message:
-            "International transfer initiated! Processing time is 3–5 business days.",
+          message: msg,
         });
+        toast.success(msg);
         setForm(initialForm);
       } else {
+        const msg = result.message || "Transfer failed.";
         setStatus({
           type: "error",
-          message: result.message || "Transfer failed.",
+          message: msg,
         });
+        toast.error(msg);
       }
     } catch (err: any) {
+      const msg = err.data?.message || "An error occurred. Please try again.";
       setStatus({
         type: "error",
-        message: err.data?.message || "An error occurred. Please try again.",
+        message: msg,
       });
+      toast.error(msg);
     }
   };
 
@@ -146,16 +152,22 @@ export default function InternationalTransferView() {
 
       if (result.success) {
         setShowOTPModal(false);
+        const msg = "International transfer verified and completed successfully!";
         setStatus({
           type: "success",
-          message: "International transfer verified and completed successfully!",
+          message: msg,
         });
+        toast.success(msg);
         setForm(initialForm);
       } else {
-        setOtpError(result.message || "Invalid verification code.");
+        const msg = result.message || "Invalid verification code.";
+        setOtpError(msg);
+        toast.error(msg);
       }
     } catch (err: any) {
-      setOtpError(err.data?.message || "Verification failed.");
+      const msg = err.data?.message || "Verification failed.";
+      setOtpError(msg);
+      toast.error(msg);
     }
   };
 
@@ -163,8 +175,11 @@ export default function InternationalTransferView() {
     try {
       await resendOTP({ transferId: pendingTransferId }).unwrap();
       startCountdown();
+      toast.success("Verification code resent.");
     } catch (err: any) {
-      setOtpError(err.data?.message || "Failed to resend code.");
+      const msg = err.data?.message || "Failed to resend code.";
+      setOtpError(msg);
+      toast.error(msg);
     }
   };
 
@@ -178,7 +193,7 @@ export default function InternationalTransferView() {
           <p className="text-gray-500 text-sm mt-1">
             Send money globally via SWIFT / IBAN. Available balance:{" "}
             <span className="font-semibold text-[#13b5a3]">
-              ${user?.balance?.toLocaleString() ?? "0.00"}
+              ${balance?.toLocaleString() ?? "0.00"}
             </span>
           </p>
         </div>

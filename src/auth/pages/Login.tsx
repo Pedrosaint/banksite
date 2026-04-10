@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { login } from "../../store/authSlice";
 import {
   useLoginMutation,
@@ -53,6 +54,7 @@ export default function Login() {
             role: "user",
           }),
         );
+        toast.success("Login successful! Welcome back.");
         navigate("/user/dashboard/home");
       }
       return;
@@ -84,11 +86,14 @@ export default function Login() {
               role: "admin",
             }),
           );
+          toast.success("Admin login successful!");
           navigate("/admin/dashboard/home");
         }
         return;
       } catch (adminError: any) {
-        setError("Invalid credentials. Please check your email and password.");
+        const errorMsg = adminError.data?.message || "Invalid credentials. Please check your email and password.";
+        setError(errorMsg);
+        toast.error(errorMsg);
       }
     }
   };
@@ -130,14 +135,18 @@ export default function Login() {
         );
 
         setShowOTPModal(false);
+        toast.success("Verification successful!");
         navigate("/user/dashboard/home");
       } else {
-        setOtpError("Invalid OTP. Please try again.");
+        const msg = "Invalid OTP. Please try again.";
+        setOtpError(msg);
+        toast.error(msg);
       }
     } catch (err: unknown) {
       const errorMessage =
         (err as any)?.data?.message || "OTP verification failed.";
       setOtpError(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
@@ -150,9 +159,10 @@ export default function Login() {
 
       if (result.success) {
         startCountdown();
-        console.log("OTP resent successfully");
+        toast.success("OTP has been resent to your email.");
       }
     } catch (error) {
+      toast.error("Failed to resend OTP. Please try again.");
       console.error("Failed to resend OTP:", error);
     }
   };

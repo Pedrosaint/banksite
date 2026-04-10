@@ -1,8 +1,7 @@
-import { useSelector } from "react-redux";
-import type { RootState } from "../../../store";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 export default function ProfileView() {
-  const user = useSelector((s: RootState) => s.auth.user);
+  const { user, balance } = useCurrentUser();
 
   if (!user) {
     return (
@@ -21,13 +20,12 @@ export default function ProfileView() {
     { label: "First Name", value: user.firstName },
     { label: "Last Name", value: user.lastName },
     { label: "Email Address", value: user.email },
-    { label: "Phone Number", value: user.phoneNumber || user.phone },
+    { label: "Phone Number", value: user.phoneNumber },
     { label: "Country", value: user.country },
     { label: "Address", value: user.address },
-    { label: "Date of Birth", value: user.dateOfBirth || user.dob },
+    { label: "Date of Birth", value: user.dateOfBirth },
     { label: "Account Number", value: maskedAccount },
     { label: "Account Type", value: user.accountType },
-    { label: "Swift Code", value: user.swiftCode || "0TFB2724502" },
     {
       label: "Account Status",
       value: user.isSuspicious ? "Under Review" : "Active",
@@ -36,10 +34,10 @@ export default function ProfileView() {
       label: "Member Since",
       value: user.createdAt
         ? new Date(user.createdAt).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
         : undefined,
     },
   ];
@@ -74,7 +72,7 @@ export default function ProfileView() {
             Balance
           </p>
           <p className="text-2xl font-bold text-[#13b5a3]">
-            ${user.balance?.toLocaleString() ?? "0.00"}
+            ${balance?.toLocaleString() ?? "0.00"}
           </p>
         </div>
       </div>

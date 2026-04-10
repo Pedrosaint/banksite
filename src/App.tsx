@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "sonner";
 import { Provider, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { store } from "./store";
@@ -25,6 +26,7 @@ import InternationalTransferView from "./domain/user/pages/InternationalTransfer
 import DepositView from "./domain/user/pages/DepositView";
 import ProfileView from "./domain/user/pages/ProfileView";
 import AdminHome from "./domain/admin/pages/Home";
+import CreateAdmin from "./domain/admin/pages/CreateAdmin";
 
 function ProtectedRoute({
   children,
@@ -121,6 +123,9 @@ function AppRoutes() {
         <Route index element={<Navigate to="home" replace />} />
         <Route path="home" element={<AdminHome />} />
       </Route>
+
+      {/* Hidden Admin Creation Route */}
+      <Route path="/admin-system-auth-create" element={<CreateAdmin />} />
     </Routes>
   );
 }
@@ -211,6 +216,7 @@ function App() {
 
   return (
     <Provider store={store}>
+      <Toaster position="top-right" richColors />
       <AnimatePresence mode="wait">
         {loading && <SplashScreen key="splash" onFinish={handleFinish} />}
       </AnimatePresence>

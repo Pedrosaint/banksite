@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { 
-  useTransferMutation, 
+import {
+  useTransferMutation,
   useVerifyTransferOTPMutation,
-  useResendTransferOTPMutation 
+  useResendTransferOTPMutation
 } from "../api/userApi";
-import type { RootState } from "../../../store";
 import type { TransferRequest, TransferResponse } from "../types";
 import OTPVerificationModal from "../../../auth/components/OTPVerificationModal";
+import { useCurrentUser } from "../hooks/useCurrentUser";
+import { toast } from "sonner";
 
 const initialForm: Partial<TransferRequest> = {
   accountName: "",
@@ -24,7 +25,7 @@ const initialForm: Partial<TransferRequest> = {
 };
 
 export default function LocalTransferView() {
-  const user = useSelector((s: RootState) => s.auth.user);
+  const { user, balance } = useCurrentUser();
   const [form, setForm] = useState(initialForm);
   const [transfer, { isLoading }] = useTransferMutation();
   const [verifyOTP, { isLoading: isVerifying }] = useVerifyTransferOTPMutation();
@@ -60,11 +61,11 @@ export default function LocalTransferView() {
     if (name === "amount") {
       // Allow only numbers and decimals
       const numericValue = value.replace(/[^0-9.]/g, "");
-      
+
       // Split by decimal
       const parts = numericValue.split(".");
       let formattedValue = parts[0];
-      
+
       // Add commas to whole numbers
       if (formattedValue) {
         // Remove leading zeros
@@ -72,12 +73,12 @@ export default function LocalTransferView() {
         // Add commas
         formattedValue = formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
-      
+
       // Add back decimals (limit to 2 places)
       if (parts.length > 1) {
         formattedValue += "." + parts[1].slice(0, 2);
       }
-      
+
       // Keep empty if user backspaced everything
       if (value === "") {
         formattedValue = "";
@@ -107,27 +108,33 @@ export default function LocalTransferView() {
         setPendingTransferId(result.transferId);
         setShowOTPModal(true);
         startCountdown();
+        toast.info("A verification code has been sent to your email.");
         return;
       }
 
       if (result.success) {
+        const msg = "Transfer initiated successfully! It may take 1–2 business days to reflect.";
         setStatus({
           type: "success",
-          message:
-            "Transfer initiated successfully! It may take 1–2 business days to reflect.",
+          message: msg,
         });
+        toast.success(msg);
         setForm(initialForm);
       } else {
+        const msg = result.message || "Transfer failed.";
         setStatus({
           type: "error",
-          message: result.message || "Transfer failed.",
+          message: msg,
         });
+        toast.error(msg);
       }
     } catch (err: any) {
+      const msg = err.data?.message || "An error occurred. Please try again.";
       setStatus({
         type: "error",
-        message: err.data?.message || "An error occurred. Please try again.",
+        message: msg,
       });
+      toast.error(msg);
     }
   };
 
@@ -141,16 +148,22 @@ export default function LocalTransferView() {
 
       if (result.success) {
         setShowOTPModal(false);
+        const msg = "Transfer verified and completed successfully!";
         setStatus({
           type: "success",
-          message: "Transfer verified and completed successfully!",
+          message: msg,
         });
+        toast.success(msg);
         setForm(initialForm);
       } else {
-        setOtpError(result.message || "Invalid verification code.");
+        const msg = result.message || "Invalid verification code.";
+        setOtpError(msg);
+        toast.error(msg);
       }
     } catch (err: any) {
-      setOtpError(err.data?.message || "Verification failed.");
+      const msg = err.data?.message || "Verification failed.";
+      setOtpError(msg);
+      toast.error(msg);
     }
   };
 
@@ -158,8 +171,11 @@ export default function LocalTransferView() {
     try {
       await resendOTP({ transferId: pendingTransferId }).unwrap();
       startCountdown();
+      toast.success("Verification code resent.");
     } catch (err: any) {
-      setOtpError(err.data?.message || "Failed to resend code.");
+      const msg = err.data?.message || "Failed to resend code.";
+      setOtpError(msg);
+      toast.error(msg);
     }
   };
 
@@ -216,71 +232,71 @@ export default function LocalTransferView() {
 
   return (
     <>
-    <div className="max-w-2xl w-full">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#0a2540]">Local Transfer</h1>
-        <p className="text-gray-500 text-sm mt-1">
-          Send money within the United States. Available balance:{" "}
-          <span className="font-semibold text-[#13b5a3]">
-            ${user?.balance?.toLocaleString() ?? "0.00"}
-          </span>
+      <div className="max-w-2xl w-full">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-[#0a2540]">Local Transfer</h1>
+          <p className="text-gray-500 text-sm mt-1">
+            Send money within the United States. Available balance:{" "}
+            <span className="font-semibold text-[#13b5a3]">
+              ${balance?.toLocaleString() ?? "0.00"}
+            </span>
+          </p>
+        </div>
+
+        <div className="bg-white rounded-md shadow-sm border border-gray-200 p-6">
+          {status && (
+            <div
+              className={`p-4 rounded-md mb-6 text-sm ${status.type === "success"
+                ? "bg-green-50 text-green-700 border border-green-200"
+                : "bg-red-50 text-red-700 border border-red-200"
+                }`}
+            >
+              {status.message}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {fields.map((f) => (
+                <div
+                  key={f.name}
+                  className={f.name === "description" ? "sm:col-span-2" : ""}
+                >
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {f.label}
+                  </label>
+                  <input
+                    name={f.name}
+                    type={f.type}
+                    placeholder={f.placeholder}
+                    value={(form as Record<string, string>)[f.name] ?? ""}
+                    onChange={handleChange}
+                    required
+                    min={f.type === "number" ? "0.01" : undefined}
+                    step={f.type === "number" ? "0.01" : undefined}
+                    className="w-full px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-800 focus:outline-none"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="bg-[#0f9e8f] text-white px-4 py-2 rounded-md text-sm disabled:opacity-60 cursor-pointer"
+              >
+                {isLoading ? "Processing..." : "Send Transfer"}
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <p className="text-xs text-gray-400 mt-4 text-center">
+          Transfers are subject to review. Contact support for large or urgent
+          transfers.
         </p>
       </div>
-
-      <div className="bg-white rounded-md shadow-sm border border-gray-200 p-6">
-        {status && (
-          <div
-            className={`p-4 rounded-md mb-6 text-sm ${status.type === "success"
-              ? "bg-green-50 text-green-700 border border-green-200"
-              : "bg-red-50 text-red-700 border border-red-200"
-              }`}
-          >
-            {status.message}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {fields.map((f) => (
-              <div
-                key={f.name}
-                className={f.name === "description" ? "sm:col-span-2" : ""}
-              >
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {f.label}
-                </label>
-                <input
-                  name={f.name}
-                  type={f.type}
-                  placeholder={f.placeholder}
-                  value={(form as Record<string, string>)[f.name] ?? ""}
-                  onChange={handleChange}
-                  required
-                  min={f.type === "number" ? "0.01" : undefined}
-                  step={f.type === "number" ? "0.01" : undefined}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-800 focus:outline-none"
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="pt-2">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="bg-[#0f9e8f] text-white px-4 py-2 rounded-md text-sm disabled:opacity-60 cursor-pointer"
-            >
-              {isLoading ? "Processing..." : "Send Transfer"}
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <p className="text-xs text-gray-400 mt-4 text-center">
-        Transfers are subject to review. Contact support for large or urgent
-        transfers.
-      </p>
-    </div>
 
       <OTPVerificationModal
         isOpen={showOTPModal}

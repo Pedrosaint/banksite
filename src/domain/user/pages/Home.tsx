@@ -1,13 +1,11 @@
 import { useState } from "react";
-
+import { toast } from "sonner";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { useSelector } from "react-redux";
 import {
   useTransferMutation,
   useGetUserTransactionsQuery,
 } from "../api/userApi";
-import type { RootState } from "../../../store";
-import type { User } from "../../../auth/types";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 import TransferModal from "../components/TransferModal";
 import type { TransferRequest, TransferResponse } from "../types";
 
@@ -23,7 +21,7 @@ interface Transaction {
 }
 
 export default function UserHome() {
-  const user = useSelector((state: RootState) => state.auth.user) as User;
+  const { user, balance } = useCurrentUser();
   const [showTransferModal, setShowTransferModal] = useState(false);
   const [transfer, { isLoading }] = useTransferMutation();
   const { data: transactionsData, isLoading: transactionsLoading } =
@@ -79,13 +77,13 @@ export default function UserHome() {
               <div>
                 <p className="text-gray-500">Total Balance</p>
                 <h2 className="text-3xl font-bold">
-                  ${user.balance.toLocaleString()}
+                  ${balance.toLocaleString()}
                 </h2>
               </div>
               <div>
                 <p className="text-gray-500">Available Balance</p>
                 <h2 className="text-3xl font-bold">
-                  ${user.balance.toLocaleString()}
+                  ${balance.toLocaleString()}
                 </h2>
               </div>
             </div>
@@ -96,7 +94,7 @@ export default function UserHome() {
                 <div className="absolute w-full h-full backface-hidden bg-[#0f9e8f] text-white rounded-lg p-4 shadow cursor-pointer">
                   <div className="flex justify-end">
                     <span className="font-bold text-lg">
-                      ${user.balance.toLocaleString()}
+                      ${balance.toLocaleString()}
                     </span>
                   </div>
                   <div className="mt-6 text-xl tracking-widest text-center font-semibold">
@@ -152,7 +150,7 @@ export default function UserHome() {
               </div>
               <div className="flex justify-between">
                 <span>Balance :</span>
-                <span>${user.balance.toLocaleString()}</span>
+                <span>${balance.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
                 <span>Account Type :</span>
@@ -174,7 +172,10 @@ export default function UserHome() {
                 <span className="uppercase text-[75%]">Delete Card</span>
               </button>
               <button
-                onClick={() => setShowModal(true)}
+                onClick={() => {
+                  setShowModal(true);
+                  toast.info("Please follow the instructions to initiate your deposit.");
+                }}
                 className="bg-[#13b5a3] text-white px-4 py-2 rounded cursor-pointer"
               >
                 <span className="uppercase text-[75%]">Fund Card</span>
@@ -220,7 +221,7 @@ export default function UserHome() {
         {/* Recent Transactions */}
         <div className="mt-8 bg-white rounded shadow-sm p-6 border border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Transactions</h2>
-    
+
           {transactionsLoading ? (
             <div className="text-center py-8">
               <p className="text-gray-500">Loading transactions...</p>
@@ -231,7 +232,7 @@ export default function UserHome() {
             </div>
           ) : (
             <div className="w-full overflow-x-auto">
-              <table className="min-w-[800px] w-full text-xs text-left text-gray-700 border-separate border-spacing-y-1">
+              <table className="min-w-200 w-full text-xs text-left text-gray-700 border-separate border-spacing-y-1">
                 <thead className="bg-[#F5F6FA] text-gray-500 font-medium border-b border-gray-300">
                   <tr>
                     <th className="py-2 px-2">REFERENCE ID</th>
@@ -251,27 +252,25 @@ export default function UserHome() {
                       <td className="py-2 px-2">#{transaction.id.slice(0, 8)}</td>
                       <td className="px-2 capitalize">{transaction.type}</td>
                       <td
-                        className={`px-2 ${
-                          transaction.type === "transfer" || transaction.type === "debit"
+                        className={`px-2 ${transaction.type === "transfer" || transaction.type === "debit"
                             ? "text-red-600"
                             : "text-green-600"
-                        }`}
+                          }`}
                       >
                         {transaction.type === "transfer" || transaction.type === "debit" ? "-" : "+"}$
                         {Math.abs(transaction.amount).toFixed(2)}
                       </td>
-                      <td className="px-2 truncate max-w-[120px]">
+                      <td className="px-2 truncate max-w-30">
                         {transaction.description || "-"}
                       </td>
                       <td className="px-2">
                         <span
-                          className={`px-2 py-1 rounded-full text-xs ${
-                            transaction.status === "completed" || transaction.status === "success"
+                          className={`px-2 py-1 rounded-full text-xs ${transaction.status === "completed" || transaction.status === "success"
                               ? "bg-green-100 text-green-800"
                               : transaction.status === "pending"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-red-100 text-red-800"
-                          }`}
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-red-100 text-red-800"
+                            }`}
                         >
                           {transaction.status}
                         </span>
@@ -294,7 +293,7 @@ export default function UserHome() {
         onClose={() => setShowTransferModal(false)}
         onTransfer={handleTransfer}
         loading={isLoading}
-        currentBalance={user.balance}
+        currentBalance={balance}
       />
     </div>
   );

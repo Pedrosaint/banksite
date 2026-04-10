@@ -89,3 +89,15 @@ export interface GenerateTransactionsResponse {
   fromDate: string;
   toDate: string;
 }
+
+export interface CreateAdminRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+export interface CreateAdminResponse {
+  success: boolean;
+  message: string;
+}
