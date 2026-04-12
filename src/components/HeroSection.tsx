@@ -147,14 +147,7 @@ function LoginPanel() {
         </button>
       </div>
 
-      <div className="flex justify-between -mt-1">
-        <a
-          href="#"
-          className="text-[12px] font-medium transition-colors hover:text-[#0a2540]"
-          style={{ color: GREEN }}
-        >
-          Forgot Password?
-        </a>
+      <div className="flex justify-end -mt-1">
         <a
           href="/register"
           className="text-[12px] font-medium transition-colors hover:text-[#0a2540]"
@@ -333,6 +326,7 @@ export default function HeroSection() {
   const [current, setCurrent] = useState(0);
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navigate = useNavigate();
 
   const goTo = (n: number) => {
     setCurrent(n);
@@ -652,10 +646,11 @@ export default function HeroSection() {
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3 mt-3">
                 <button
+                  onClick={() => navigate("/login")}
                   className="px-7 py-3 rounded-lg text-[14px] font-medium tracking-wide transition-all hover:opacity-90 text-white cursor-pointer"
                   style={{ backgroundColor: GREEN }}
                 >
-                  {slide.cta.primary}
+                  Login
                 </button>
                 <button
                   onClick={() =>
@@ -681,21 +676,7 @@ export default function HeroSection() {
                 ))}
               </div>
 
-              {/* Mobile CTA */}
-              <div className="lg:hidden flex flex-col sm:flex-row gap-3 mt-4">
-                <button
-                  onClick={() => setActiveModal("login")}
-                  className={`${slide.cta.primaryStyle} px-6 py-3 rounded-lg text-sm font-medium transition-colors`}
-                >
-                  {slide.cta.primary}
-                </button>
-                <button
-                  onClick={() => setActiveModal(slide.cta.secondaryModal)}
-                  className="border border-white/30 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors"
-                >
-                  {slide.cta.secondary}
-                </button>
-              </div>
+
             </div>
 
             {/* Login Panel */}
@@ -726,10 +707,10 @@ export default function HeroSection() {
             ))}
           </div>
 
-          {/* Navigation arrows */}
+          {/* Navigation arrows (hidden on small screens) */}
           <button
             onClick={() => move(-1)}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/22 transition-colors"
+            className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full items-center justify-center hover:bg-white/22 transition-colors"
             style={{
               backgroundColor: "rgba(255,255,255,0.12)",
               borderColor: "rgba(255,255,255,0.2)",
@@ -749,7 +730,7 @@ export default function HeroSection() {
           </button>
           <button
             onClick={() => move(1)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/22 transition-colors"
+            className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full items-center justify-center hover:bg-white/22 transition-colors"
             style={{
               backgroundColor: "rgba(255,255,255,0.12)",
               borderColor: "rgba(255,255,255,0.2)",

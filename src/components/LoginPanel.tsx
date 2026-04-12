@@ -60,11 +60,6 @@ export default function LoginPanel() {
                   <button className="w-full bg-blue-900 text-white py-3 rounded-lg hover:bg-blue-800 transition duration-300 font-semibold cursor-pointer">
                     Login
                   </button>
-                  <div className="text-center">
-                    <a href="#" className="text-blue-600 hover:underline text-sm">
-                      Forgot Password?
-                    </a>
-                  </div>
                 </div>
               </div>
 
