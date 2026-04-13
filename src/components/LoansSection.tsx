@@ -13,7 +13,7 @@ export default function LoansSection() {
       title: "Home Loans",
       slug: "home-loans",
       description: "Build wealth with our competitive home loan programs",
-      apr: "From 6.25%*",
+      apr: "From %*",
       features: ["Fast approval", "Flexible terms", "Low down payment"],
     },
     {
@@ -21,7 +21,7 @@ export default function LoansSection() {
       title: "Auto Loans",
       slug: "auto-loans",
       description: "Finance your next vehicle with competitive rates",
-      apr: "From 5.99%*",
+      apr: "From %*",
       features: ["Quick decision", "Used & new cars", "Refinancing available"],
     },
     {
@@ -29,7 +29,7 @@ export default function LoansSection() {
       title: "Personal Loans",
       slug: "personal-loans",
       description: "Flexible funds for whatever matters most to you",
-      apr: "From 11.99%*",
+      apr: "From %*",
       features: ["Same-day funding", "Flexible amounts", "No collateral"],
     },
   ];
@@ -114,20 +114,20 @@ export default function LoansSection() {
               {[
                 {
                   type: "Home Loan",
-                  apr: "6.25% - 7.5%",
-                  term: "15-30 years",
+                  apr: "% - %",
+                  term: "- years",
                   slug: "home-loans",
                 },
                 {
                   type: "Auto Loan",
-                  apr: "5.99% - 7.25%",
-                  term: "36-84 months",
+                  apr: "% - %",
+                  term: "- months",
                   slug: "auto-loans",
                 },
                 {
                   type: "Personal Loan",
-                  apr: "11.99% - 14.75%",
-                  term: "24-60 months",
+                  apr: "% - %",
+                  term: "- months",
                   slug: "personal-loans",
                 },
               ].map((row, i) => (

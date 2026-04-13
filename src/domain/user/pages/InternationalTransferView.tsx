@@ -118,7 +118,7 @@ export default function InternationalTransferView() {
       }
 
       if (result.success) {
-        const msg = "International transfer initiated! Processing time is 3–5 business days.";
+        const msg = "International transfer initiated! Processing time is business days.";
         setStatus({
           type: "success",
           message: msg,
@@ -220,7 +220,7 @@ export default function InternationalTransferView() {
                 <input
                   name="accountNumber"
                   type="text"
-                  placeholder="GB29 NWBK 6016 1331 9268 19"
+                  placeholder="REDACTED"
                   value={form.accountNumber ?? ""}
                   onChange={handleChange}
                   required
@@ -236,7 +236,7 @@ export default function InternationalTransferView() {
                 <input
                   name="ibanNumber"
                   type="text"
-                  placeholder="GB29 NWBK 6016 1331 9268 19"
+                  placeholder="REDACTED"
                   value={form.ibanNumber ?? ""}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-800 focus:outline-none"
@@ -251,7 +251,7 @@ export default function InternationalTransferView() {
                 <input
                   name="swiftCode"
                   type="text"
-                  placeholder="NWBKGB2L"
+                  placeholder="REDACTED"
                   value={form.swiftCode ?? ""}
                   onChange={handleChange}
                   required
@@ -283,7 +283,7 @@ export default function InternationalTransferView() {
                 <input
                   name="bankAddress"
                   type="text"
-                  placeholder="280 Bishopsgate, London"
+                  placeholder="[Location Removed]"
                   value={form.bankAddress ?? ""}
                   onChange={handleChange}
                   required
@@ -337,7 +337,7 @@ export default function InternationalTransferView() {
                 <input
                   name="amount"
                   type="text"
-                  placeholder="0.00"
+                  placeholder="X.XX"
                   value={form.amount ?? ""}
                   onChange={handleChange}
                   required
@@ -374,8 +374,7 @@ export default function InternationalTransferView() {
         </div>
 
         <p className="text-xs text-gray-400 mt-4 text-center">
-          International transfers are reviewed for compliance. Processing: 3–5
-          business days.
+          International transfers are reviewed for compliance. Processing:          business days.
         </p>
       </div>
 

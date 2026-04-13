@@ -114,7 +114,7 @@ export default function LocalTransferView() {
       }
 
       if (result.success) {
-        const msg = "Transfer initiated successfully! It may take 1–2 business days to reflect.";
+        const msg = "Transfer initiated successfully! It may take business days to reflect.";
         setStatus({
           type: "success",
           message: msg,
@@ -185,7 +185,7 @@ export default function LocalTransferView() {
       name: "accountNumber",
       label: "Account Number",
       type: "text",
-      placeholder: "1234567890",
+      placeholder: "REDACTED",
     },
     {
       name: "bankName",
@@ -197,25 +197,25 @@ export default function LocalTransferView() {
       name: "bankAddress",
       label: "Bank Address",
       type: "text",
-      placeholder: "123 Main St, New York",
+      placeholder: "[Location Removed]",
     },
     {
       name: "swiftCode",
       label: "SWIFT Code",
       type: "text",
-      placeholder: "CHASUS33",
+      placeholder: "REDACTED",
     },
     {
       name: "ibanNumber",
       label: "IBAN Number",
       type: "text",
-      placeholder: "US12CHAS34567890123456",
+      placeholder: "REDACTED",
     },
     {
       name: "amount",
       label: "Amount (USD)",
       type: "text",
-      placeholder: "0.00",
+      placeholder: "X.XX",
     },
     {
       name: "description",

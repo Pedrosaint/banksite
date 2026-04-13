@@ -178,8 +178,8 @@ export default function OTPVerificationModal({
               </h3>
               <p className="text-sm text-gray-500">
                 {purpose === "login"
-                  ? "Enter the 6-digit code sent to your email"
-                  : "Enter the 6-digit code to complete your transfer"}
+                  ? "Enter the code sent to your email"
+                  : "Enter the code to complete your transfer"}
               </p>
             </div>
             <button
@@ -223,7 +223,7 @@ export default function OTPVerificationModal({
                           ? "border-green-300 text-green-600 bg-green-50"
                           : "border-gray-300 text-gray-900 bg-white focus:border-[#13b5a3] focus:ring-2 focus:ring-[#13b5a3] focus:ring-offset-2"
                       }`}
-                    placeholder="0"
+                    placeholder="X"
                     autoFocus={index === 0}
                   />
                   {digit && (
@@ -259,7 +259,7 @@ export default function OTPVerificationModal({
                 ) : countdown > 0 ? (
                   <>
                     <FiClock className="text-sm" />
-                    {`Resend in ${countdown}s`}
+                    Resend later
                   </>
                 ) : (
                   <>
@@ -309,7 +309,7 @@ export default function OTPVerificationModal({
                   Security Notice:
                 </p>
                 <ul className="text-blue-700 space-y-1">
-                  <li>· Enter the 6-digit code within 10 minutes</li>
+                  <li>· Enter the code within minutes</li>
                   <li>· Never share your verification code with anyone</li>
                   <li>· This code can only be used once</li>
                   <li>· If you didn't request this, please contact support</li>

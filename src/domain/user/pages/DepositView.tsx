@@ -96,7 +96,7 @@ const DepositView = () => {
                 <span className="font-bold">{method}</span>.
               </p>
               <p className="mt-4 text-gray-600 text-sm">
-                Customer care: support@yourbank.com | +1 (234) 567-8900
+                Customer care: https://www.wellsfargo.com | [Phone Removed]
               </p>
             </div>
 

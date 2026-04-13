@@ -61,11 +61,7 @@ export default function ContactSection() {
                     Main Office
                   </h4>
                   <p className="text-gray-600">
-                    123 Financial Boulevard
-                    <br />
-                    Riverside, OH 45202
-                    <br />
-                    United States
+                    [Location Removed]
                   </p>
                 </div>
               </div>
@@ -80,13 +76,13 @@ export default function ContactSection() {
                   </h4>
                   <p className="text-gray-600">
                     <a
-                      href="tel:+15551234567"
+                      href="#"
                       className="text-[#13b5a3] hover:text-[#0f9e8f] font-semibold transition-colors"
                     >
-                      +1 (555) 123-4567
+                      [Phone Removed]
                     </a>
                     <br />
-                    Mon-Fri, 8am-6pm EST
+                    Mon-Fri, Hours Removed
                   </p>
                 </div>
               </div>
@@ -101,10 +97,10 @@ export default function ContactSection() {
                   </h4>
                   <p className="text-gray-600">
                     <a
-                      href="mailto:support@novatrust.com"
+                      href="https://www.wellsfargo.com"
                       className="text-[#13b5a3] hover:text-[#0f9e8f] font-semibold transition-colors"
                     >
-                      support@novatrust.com
+                      https://www.wellsfargo.com
                     </a>
                   </p>
                 </div>
@@ -119,9 +115,9 @@ export default function ContactSection() {
                     Business Hours
                   </h4>
                   <p className="text-gray-600">
-                    Mon-Fri: 8:00 AM - 6:00 PM
+                    Mon-Fri: Hours Removed
                     <br />
-                    Sat: 9:00 AM - 2:00 PM
+                    Sat: Hours Removed
                     <br />
                     Sun: Closed
                   </p>
@@ -179,7 +175,7 @@ export default function ContactSection() {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition duration-300"
-                  placeholder="john@example.com"
+                  placeholder="https://www.wellsfargo.com"
                 />
               </div>
 

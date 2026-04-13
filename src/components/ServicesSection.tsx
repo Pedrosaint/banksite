@@ -18,7 +18,7 @@ export default function ServicesSection() {
     {
       title: "Online Banking",
       description:
-        "Manage your accounts 24/7 from anywhere with our secure online platform.",
+        "Manage your accounts anytime from anywhere with our secure online platform.",
       icon: FiGlobe,
     },
     {
@@ -29,13 +29,13 @@ export default function ServicesSection() {
     },
     {
       title: "ATM Network",
-      description: "Access to 30,000+ surcharge-free ATMs nationwide.",
+      description: "Access to surcharge-free ATMs nationwide.",
       icon: FiCreditCard,
     },
     {
       title: "Customer Support",
       description:
-        "Our dedicated team is ready to help you Monday-Friday, 8am-6pm EST.",
+        "Our dedicated team is ready to help you Mon-Fri during business hours.",
       icon: FiPhone,
     },
     {
@@ -96,7 +96,7 @@ export default function ServicesSection() {
                 <div>
                   <h4 className="font-bold text-lg mb-2">NCUA Insured</h4>
                   <p className="text-white/80">
-                    Your deposits are protected up to $250,000 by the National
+                    Your deposits are protected up to $ by the National
                     Credit Union Administration
                   </p>
                 </div>
@@ -104,11 +104,8 @@ export default function ServicesSection() {
               <div className="flex items-start">
                 <span className="text-3xl mr-4 text-[#13b5a3]">✓</span>
                 <div>
-                  <h4 className="font-bold text-lg mb-2">256-Bit Encryption</h4>
-                  <p className="text-white/80">
                     Bank-level security protects all your transactions and
                     personal information
-                  </p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -127,7 +124,7 @@ export default function ServicesSection() {
                 <span className="text-3xl mr-4 text-[#13b5a3]">✓</span>
                 <div>
                   <h4 className="font-bold text-lg mb-2">
-                    24/7 Fraud Monitoring
+                    Fraud Monitoring
                   </h4>
                   <p className="text-white/80">
                     Continuous monitoring to detect and prevent unauthorized

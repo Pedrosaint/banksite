@@ -72,7 +72,7 @@ export default function LoginForm({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
-                  placeholder="Enter your email"
+                  placeholder="https://www.wellsfargo.com"
                   required
                 />
               </div>

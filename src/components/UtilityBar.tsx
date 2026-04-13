@@ -7,19 +7,19 @@ export default function UtilityBar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center text-xs sm:text-sm">
         <div className="flex items-center space-x-2 sm:space-x-6">
           <a
-            href="tel:+15551234567"
+            href="#"
             className="hover:text-[#13b5a3] transition flex items-center space-x-1"
           >
             <FiPhone className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span className="hidden sm:inline">(555) 123-4567</span>
+            <span className="hidden sm:inline">[Phone Removed]</span>
             <span className="sm:hidden">Call</span>
           </a>
           <a
-            href="mailto:support@apexbank.com"
+            href="https://www.wellsfargo.com"
             className="hover:text-[#13b5a3] transition flex items-center space-x-1"
           >
             <FiMail className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span className="hidden sm:inline">support@apexbank.com</span>
+            <span className="hidden sm:inline">https://www.wellsfargo.com</span>
             <span className="sm:hidden">Email</span>
           </a>
         </div>

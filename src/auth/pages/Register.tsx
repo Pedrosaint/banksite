@@ -270,7 +270,7 @@ export default function Register() {
                     onChange={(e) => update("email", e.target.value)}
                     required
                     className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3]"
-                    placeholder="john@example.com"
+                    placeholder="https://www.wellsfargo.com"
                   />
                 </div>
               </div>
@@ -286,7 +286,7 @@ export default function Register() {
                     onChange={(e) => update("phone", e.target.value.replace(/[^0-9+]/g, ""))}
                     required
                     className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3]"
-                    placeholder="+1 (555) 000-0000"
+                    placeholder="[Phone Removed]"
                   />
                 </div>
               </div>
@@ -370,7 +370,7 @@ export default function Register() {
                   required
                   rows={3}
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] resize-none"
-                  placeholder="123 Main St, City, State"
+                  placeholder="[Location Removed]"
                 />
               </div>
             </div>
@@ -423,7 +423,7 @@ export default function Register() {
                   onChange={(e) => update("password", e.target.value)}
                   required
                   className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3]"
-                  placeholder="Min 4 characters"
+                  placeholder="Min characters"
                 />
                 <button
                   type="button"

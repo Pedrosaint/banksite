@@ -71,7 +71,7 @@ export default function AboutSection() {
                 </li>
                 <li className="flex items-center">
                   <span className="text-[#13b5a3] font-bold mr-2">✓</span> NCUA
-                  insured up to $250,000
+                  insured up to $
                 </li>
                 <li className="flex items-center">
                   <span className="text-[#13b5a3] font-bold mr-2">✓</span>{" "}
@@ -99,7 +99,7 @@ export default function AboutSection() {
                 <p className="text-white/80 text-lg">Trusted Members</p>
               </div>
               <div className="border-t border-white/20 pt-8 group">
-                <div className="text-5xl font-bold mb-2 group-hover:text-[#13b5a3] transition-colors duration-300">$2.5B</div>
+                <div className="text-5xl font-bold mb-2 group-hover:text-[#13b5a3] transition-colors duration-300">$B</div>
                 <p className="text-white/80 text-lg">Assets Under Management</p>
               </div>
               <div className="border-t border-white/20 pt-8 text-center">

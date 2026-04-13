@@ -109,7 +109,7 @@ export default function UserHome() {
                     </div>
                     <div className="mt-2 text-lg">
                       <p className="uppercase text-[55%]">Expires</p>
-                      <p className="font-bold">04/2029</p>
+                      <p className="font-bold">MM/YYYY</p>
                     </div>
                   </div>
                 </div>
@@ -122,7 +122,7 @@ export default function UserHome() {
                       Signature
                     </div>
                     <div className="absolute right-2 top-0 bottom-0 flex items-center bg-white px-2 text-black font-bold rounded-sm">
-                      987
+                      [CVV]
                     </div>
                   </div>
                   <div className="flex justify-between items-end text-xs opacity-50 mt-8">
@@ -162,7 +162,7 @@ export default function UserHome() {
               </div>
               <div className="flex justify-between">
                 <span>Swift Code :</span>
-                <span>0TFB2724502</span>
+                <span>REDACTED</span>
               </div>
             </div>
 
@@ -200,7 +200,7 @@ export default function UserHome() {
                       Please contact customer care to initiate your deposit
                     </p>
                     <p className="mt-4 text-gray-600 text-sm">
-                      Customer care: support@apextrust.com | +1 (234) 567-8900
+                      Customer care: https://www.wellsfargo.com | [Phone Removed]
                     </p>
                   </div>
 

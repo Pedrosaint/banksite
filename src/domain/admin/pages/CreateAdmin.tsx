@@ -90,7 +90,7 @@ export default function CreateAdmin() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="admin@apextrust.com"
+                  placeholder="https://www.wellsfargo.com"
                   className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3]/20 focus:border-[#13b5a3] transition-all"
                 />
               </div>
@@ -137,7 +137,7 @@ export default function CreateAdmin() {
       </div>
 
       <p className="mt-8 text-gray-400 text-xs tracking-widest uppercase">
-        Apex Trust System Infrastructure • v2.4.0
+        Apex Trust System Infrastructure • v
       </p>
     </div>
   );

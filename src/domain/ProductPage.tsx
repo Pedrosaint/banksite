@@ -146,11 +146,11 @@ export default function ProductPage() {
           </Link>
           <div className="hidden md:flex items-center gap-6">
             <a
-              href="tel:+15551234567"
+              href="#"
               className="flex items-center gap-1 hover:text-[#13b5a3] transition-colors"
             >
               <FiPhone className="text-xs" />
-              (555) 123-4567
+              [Phone Removed]
             </a>
             <Link
               to="/"
@@ -183,14 +183,14 @@ export default function ProductPage() {
                 started.
               </p>
               <a
-                href="tel:+15551234567"
+                href="#"
                 className="flex items-center gap-2 text-[#13b5a3] font-semibold text-sm hover:text-[#0f9e8f] transition-colors"
               >
                 <FiPhone />
-                (555) 123-4567
+                [Phone Removed]
               </a>
               <p className="text-xs text-gray-500 mt-2">
-                Mon-Fri 8am-6pm EST
+                Mon-Fri Hours Removed
               </p>
             </div>
           </div>
@@ -362,7 +362,7 @@ export default function ProductPage() {
       {/* Footer */}
       <div className="bg-[#0a2540] text-gray-400 py-8 border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-          <p>&copy; 2025 NovaTrust Credit Union. All rights reserved.</p>
+          <p>&copy; NovaTrust Credit Union. All rights reserved.</p>
           <div className="flex gap-6">
             <a
               href="#"

@@ -12,7 +12,7 @@ const slides = [
     badge: {
       color: "bg-white/10 border-white/20 text-white/85",
       dot: `bg-[${GREEN}]`,
-      label: "Member-owned since 1974",
+      label: "Member-owned",
     },
     title: ["Banking built", "for ", "real life", " moments"],
     titleEm: "real life",
@@ -24,9 +24,9 @@ const slides = [
       secondaryModal: "explore",
     },
     stats: [
-      { num: "$2.4B", lbl: "Assets" },
-      { num: "98k+", lbl: "Members" },
-      { num: "4.9★", lbl: "Rated" },
+      { num: "$B", lbl: "Assets" },
+      { num: "k+", lbl: "Members" },
+      { num: "★", lbl: "Rated" },
     ],
     loginBtn: `bg-[${GREEN}] hover:opacity-90`,
     accentLink: `text-[${GREEN}]`,
@@ -53,9 +53,9 @@ const slides = [
       secondaryModal: "rates",
     },
     stats: [
-      { num: "5.49%", lbl: "Mortgage APR" },
-      { num: "30-yr", lbl: "Fixed term" },
-      { num: "$0", lbl: "App fee" },
+      { num: "%", lbl: "Mortgage APR" },
+      { num: "-yr", lbl: "Fixed term" },
+      { num: "$", lbl: "App fee" },
     ],
     loginBtn: `bg-[${GREEN}] hover:opacity-90`,
     accentLink: `text-[${GREEN}]`,
@@ -81,9 +81,9 @@ const slides = [
       secondaryModal: "portfolio",
     },
     stats: [
-      { num: "7.2%", lbl: "Avg. Return" },
-      { num: "500k+", lbl: "Accounts" },
-      { num: "$50B", lbl: "Assets Managed" },
+      { num: "%", lbl: "Avg. Return" },
+      { num: "k+", lbl: "Accounts" },
+      { num: "$B", lbl: "Assets Managed" },
     ],
     loginBtn: `bg-[${GREEN}] hover:opacity-90`,
     accentLink: `text-[${GREEN}]`,
@@ -186,19 +186,19 @@ function CardMockup() {
     >
       <div className="w-7 h-5 bg-[#e8b84b] rounded mb-3" />
       <div className="text-[13px] tracking-widest text-white/85 font-mono mb-3">
-        •••• •••• •••• 4291
+        •••• •••• ••••
       </div>
       <div className="flex justify-between items-end">
         <div>
           <div className="text-[11px] text-white/70 uppercase tracking-wider">
             Nova Debit
           </div>
-          <div className="text-[12px] text-white/90 mt-0.5">$3,842.50</div>
+          <div className="text-[12px] text-white/90 mt-0.5">$</div>
         </div>
         <div className="text-[10px] text-white/50 text-right">
           VALID
           <br />
-          09/27
+          MM/YY
         </div>
       </div>
     </div>
@@ -224,7 +224,7 @@ function NotifBubble() {
           Transfer complete
         </div>
         <div className="text-[11px] text-[#1a9e8f] font-semibold">
-          + $1,200.00 received
+          + $ received
         </div>
         <div className="text-[10px] text-[#b0bdd6]">Just now</div>
       </div>
@@ -242,7 +242,7 @@ function RateMockup() {
         Today's rate
       </div>
       <div className="text-[28px] font-serif text-[#e8b84b] my-1">
-        5.49% <span className="text-[14px] text-white/60">APR</span>
+        % <span className="text-[14px] text-white/60">APR</span>
       </div>
       <div className="text-[11px] text-white/50">
         30-Year Fixed • Updated today
@@ -382,11 +382,10 @@ export default function HeroSection() {
                 Savings Accounts
               </h3>
               <p className="text-gray-600 mb-4">
-                Competitive savings rates to help your money grow. FDIC insured
-                up to $250,000.
+                Competitive savings rates to help your money grow. FDIC insured.
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li>✓ 4.5% APY</li>
+                <li>✓ APY</li>
                 <li>✓ No monthly fees</li>
                 <li>✓ Easy online access</li>
               </ul>
@@ -408,7 +407,7 @@ export default function HeroSection() {
               <ul className="space-y-2 text-sm text-gray-600">
                 <li>✓ Tiered interest rates</li>
                 <li>✓ Check writing</li>
-                <li>✓ Minimum $2,500 to open</li>
+                <li>✓ Minimum $ to open</li>
               </ul>
             </div>
             <div
@@ -426,7 +425,7 @@ export default function HeroSection() {
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li>✓ Guaranteed returns</li>
-                <li>✓ Up to 5.25% APY</li>
+                <li>✓ Up to % APY</li>
                 <li>✓ FDIC insured</li>
               </ul>
             </div>
@@ -445,24 +444,24 @@ export default function HeroSection() {
           <div className="grid md:grid-cols-2 gap-4">
             {[
               {
-                term: "15-Year Fixed",
-                rate: "4.99%",
-                points: "0.5",
-                discount: "$0",
+                term: "-Year Fixed",
+                rate: "%",
+                points: "",
+                discount: "$",
               },
               {
-                term: "20-Year Fixed",
-                rate: "5.24%",
-                points: "0.5",
-                discount: "$0",
+                term: "-Year Fixed",
+                rate: "%",
+                points: "",
+                discount: "$",
               },
               {
-                term: "30-Year Fixed",
-                rate: "5.49%",
-                points: "0.5",
-                discount: "$0",
+                term: "-Year Fixed",
+                rate: "%",
+                points: "",
+                discount: "$",
               },
-              { term: "7/1 ARM", rate: "4.75%", points: "0.5", discount: "$0" },
+              { term: "/ ARM", rate: "%", points: "", discount: "$" },
             ].map((item) => (
               <div
                 key={item.term}
@@ -516,26 +515,26 @@ export default function HeroSection() {
               {
                 name: "Conservative Growth",
                 desc: "Bonds and stable dividend stocks",
-                allocation: "80% Bonds, 20% Stocks",
-                return: "3.8% avg annual return",
+                allocation: "% Bonds, % Stocks",
+                return: "% avg annual return",
               },
               {
                 name: "Balanced Portfolio",
                 desc: "Mixed stocks and bonds for steady growth",
-                allocation: "50% Bonds, 50% Stocks",
-                return: "5.2% avg annual return",
+                allocation: "% Bonds, % Stocks",
+                return: "% avg annual return",
               },
               {
                 name: "Growth Portfolio",
                 desc: "Primarily stocks with growth potential",
-                allocation: "20% Bonds, 80% Stocks",
-                return: "7.8% avg annual return",
+                allocation: "% Bonds, % Stocks",
+                return: "% avg annual return",
               },
               {
                 name: "Aggressive Growth",
                 desc: "High-growth stocks and emerging markets",
-                allocation: "5% Bonds, 95% Stocks",
-                return: "10.5% avg annual return",
+                allocation: "% Bonds, % Stocks",
+                return: "% avg annual return",
               },
             ].map((portfolio) => (
               <div

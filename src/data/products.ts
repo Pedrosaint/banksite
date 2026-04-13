@@ -29,12 +29,12 @@ export const products: Product[] = [
       {
         title: "Competitive APY",
         description:
-          "Earn up to 4.50% APY on your balance — significantly higher than the national average.",
+          "Earn up to % APY on your balance — significantly higher than the national average.",
       },
       {
         title: "No Minimum Balance",
         description:
-          "Open your account with as little as $5 and never worry about minimum balance fees.",
+          "Open your account with as little as $ and never worry about minimum balance fees.",
       },
       {
         title: "Easy Transfers",
@@ -44,7 +44,7 @@ export const products: Product[] = [
       {
         title: "NCUA Insured",
         description:
-          "Your deposits are federally insured up to $250,000 by the National Credit Union Administration.",
+          "Your deposits are federally insured by the National Credit Union Administration.",
       },
       {
         title: "Mobile & Online Access",
@@ -58,15 +58,15 @@ export const products: Product[] = [
       },
     ],
     rates: [
-      { label: "$0 – $9,999", value: "3.75% APY" },
-      { label: "$10,000 – $49,999", value: "4.00% APY" },
-      { label: "$50,000+", value: "4.50% APY" },
+      { label: "$ – $", value: "% APY" },
+      { label: "$ – $", value: "% APY" },
+      { label: "$+", value: "% APY" },
     ],
     benefits: [
       "No monthly maintenance fees",
       "Free online and mobile banking",
       "Free direct deposit",
-      "Access to 30,000+ surcharge-free ATMs",
+      "Access to surcharge-free ATMs",
       "Automatic savings tools",
       "24/7 account access",
     ],
@@ -183,9 +183,9 @@ export const products: Product[] = [
       },
     ],
     rates: [
-      { label: "Business Checking", value: "No monthly fee", note: "First 500 transactions free" },
-      { label: "Business Savings", value: "3.25% APY" },
-      { label: "Business Money Market", value: "3.75% APY", note: "$10,000 minimum" },
+      { label: "Business Checking", value: "No monthly fee", note: "First transactions free" },
+      { label: "Business Savings", value: "% APY" },
+      { label: "Business Money Market", value: "% APY", note: "$ minimum" },
     ],
     benefits: [
       "No minimum balance requirement",
@@ -199,7 +199,7 @@ export const products: Product[] = [
       "Employer Identification Number (EIN) or SSN for sole proprietors",
       "Business formation documents (Articles of Incorporation, LLC papers, etc.)",
       "Valid government-issued ID for all signers",
-      "$100 minimum opening deposit",
+      "$ minimum opening deposit",
     ],
     ctaLabel: "Open a Business Account",
     ctaSecondaryLabel: "Talk to a Specialist",
@@ -248,10 +248,10 @@ export const products: Product[] = [
       },
     ],
     rates: [
-      { label: "15-Year Fixed", value: "4.99% APR" },
-      { label: "20-Year Fixed", value: "5.24% APR" },
-      { label: "30-Year Fixed", value: "5.49% APR" },
-      { label: "7/1 ARM", value: "4.75% APR", note: "Rate adjusts after 7 years" },
+      { label: "-Year Fixed", value: "% APR" },
+      { label: "-Year Fixed", value: "% APR" },
+      { label: "-Year Fixed", value: "% APR" },
+      { label: "/ ARM", value: "% APR", note: "Rate adjusts after years" },
     ],
     benefits: [
       "$0 application fee",
@@ -315,12 +315,12 @@ export const products: Product[] = [
       },
     ],
     rates: [
-      { label: "New Vehicle (36 mo)", value: "5.49% APR" },
-      { label: "New Vehicle (60 mo)", value: "5.99% APR" },
-      { label: "New Vehicle (84 mo)", value: "6.49% APR" },
-      { label: "Used Vehicle (36 mo)", value: "5.99% APR" },
-      { label: "Used Vehicle (60 mo)", value: "6.49% APR" },
-      { label: "Refinance", value: "As low as 5.49% APR" },
+      { label: "New Vehicle ( mo)", value: "% APR" },
+      { label: "New Vehicle ( mo)", value: "% APR" },
+      { label: "New Vehicle ( mo)", value: "% APR" },
+      { label: "Used Vehicle ( mo)", value: "% APR" },
+      { label: "Used Vehicle ( mo)", value: "% APR" },
+      { label: "Refinance", value: "As low as % APR" },
     ],
     benefits: [
       "No application fee",
@@ -384,10 +384,10 @@ export const products: Product[] = [
       },
     ],
     rates: [
-      { label: "24 Months", value: "11.99% APR" },
-      { label: "36 Months", value: "12.49% APR" },
-      { label: "48 Months", value: "13.49% APR" },
-      { label: "60 Months", value: "14.75% APR" },
+      { label: " Months", value: "% APR" },
+      { label: " Months", value: "% APR" },
+      { label: " Months", value: "% APR" },
+      { label: " Months", value: "% APR" },
     ],
     benefits: [
       "No application or origination fees",
@@ -398,11 +398,11 @@ export const products: Product[] = [
       "Free financial counseling",
     ],
     requirements: [
-      "Minimum credit score of 640",
+      "Minimum credit score of ",
       "Proof of income (pay stubs or tax returns)",
       "Valid government-issued ID",
-      "Minimum 1 year of employment history",
-      "Debt-to-income ratio below 45%",
+      "Minimum year of employment history",
+      "Debt-to-income ratio below %",
     ],
     ctaLabel: "Apply for a Personal Loan",
     ctaSecondaryLabel: "Check Your Rate",

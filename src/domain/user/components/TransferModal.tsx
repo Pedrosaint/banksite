@@ -312,7 +312,7 @@ export default function TransferModal({
                       onChange={(e) =>
                         handleInputChange("amount", e.target.value)
                       }
-                      placeholder="0.00"
+                      placeholder="X.XX"
                       min="1"
                       step="0.01"
                       className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
@@ -423,7 +423,7 @@ export default function TransferModal({
                     <span className="font-bold text-[#13b5a3]">
                       {formData.amount
                         ? formatAmount(formData.amount)
-                        : "$0.00"}
+                        : "$X.XX"}
                     </span>
                   </div>
                   <div className="flex justify-between">

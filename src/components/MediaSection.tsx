@@ -69,7 +69,7 @@ export default function MediaSection() {
                   </div>
                   <p className="text-2xl font-bold">How We Serve You</p>
                   <p className="text-white/70 mt-1 text-sm">
-                    Watch our story — 2 min
+                    Watch our story — min
                   </p>
                 </div>
               </div>
@@ -79,7 +79,7 @@ export default function MediaSection() {
             <div className="space-y-4">
               <div className="bg-[#13b5a3]/10 rounded-xl p-6 border border-[#13b5a3]/20 hover:border-[#13b5a3]/40 transition-colors duration-300">
                 <div className="text-4xl font-bold text-[#13b5a3] mb-2">
-                  50K+
+                  K+
                 </div>
                 <p className="text-lg text-gray-200">
                   Satisfied Members Nationwide
@@ -87,7 +87,7 @@ export default function MediaSection() {
               </div>
               <div className="bg-[#13b5a3]/10 rounded-xl p-6 border border-[#13b5a3]/20 hover:border-[#13b5a3]/40 transition-colors duration-300">
                 <div className="text-4xl font-bold text-[#13b5a3] mb-2">
-                  $2.5B
+                  $B
                 </div>
                 <p className="text-lg text-gray-200">
                   Assets Under Management
@@ -95,7 +95,7 @@ export default function MediaSection() {
               </div>
               <div className="bg-[#13b5a3]/10 rounded-xl p-6 border border-[#13b5a3]/20 hover:border-[#13b5a3]/40 transition-colors duration-300">
                 <div className="text-4xl font-bold text-[#13b5a3] mb-2">
-                  25+
+                  +
                 </div>
                 <p className="text-lg text-gray-200">
                   Years of Trusted Service

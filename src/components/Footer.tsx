@@ -18,7 +18,7 @@ export default function Footer() {
               Nova<span className="text-[#13b5a3]">Trust</span>
             </h3>
             <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-              Building trust and empowering financial futures for over 25 years.
+              Building trust and empowering financial futures for some time.
               Your credit union, your community.
             </p>
             <div className="flex space-x-4">
@@ -153,21 +153,21 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li>
                 <a
-                  href="tel:+15551234567"
+                  href="#"
                   className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
-                  +1 (555) 123-4567
+                  [Contact Number Removed]
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:support@novatrust.com"
+                  href="https://www.wellsfargo.com"
                   className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
-                  support@novatrust.com
+                  https://www.wellsfargo.com
                 </a>
               </li>
-              <li className="text-gray-500 text-xs">Mon-Fri: 8am - 6pm EST</li>
+              <li className="text-gray-500 text-xs">Mon-Fri: Hours Removed</li>
               <li>
                 <button
                   onClick={() => handleScroll("contact")}
@@ -185,7 +185,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-sm">
             <div className="text-gray-400">
               <p>
-                &copy; 2025 American Credit Digital Banking. All rights
+                &copy; American Credit Digital Banking. All rights
                 reserved.
               </p>
             </div>
@@ -219,7 +219,7 @@ export default function Footer() {
           </p>
           <p>
             This credit union is federally insured by the National Credit Union
-            Administration. Your account is insured up to $250,000 by the NCUA.
+            Administration. Your account is insured by the NCUA.
           </p>
         </div>
       </div>
