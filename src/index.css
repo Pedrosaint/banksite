@@ -119,6 +119,16 @@ section {
   scroll-margin-top: 5rem;
 }
 
+/* Hide the Google Translate top bar injected by the script */
+.goog-te-banner-frame,
+.skiptranslate > iframe {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
 
 
 .perspective {

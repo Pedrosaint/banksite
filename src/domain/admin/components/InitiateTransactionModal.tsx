@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiX, FiDollarSign, FiPlus, FiCreditCard, FiArrowDown, FiArrowUp } from "react-icons/fi";
+import { FiX, FiDollarSign, FiPlus, FiCreditCard, FiArrowDown, FiArrowUp, FiCalendar } from "react-icons/fi";
 import type { User, InitiateTransactionRequest } from "../types";
 
 interface InitiateTransactionModalProps {
@@ -12,11 +12,14 @@ interface InitiateTransactionModalProps {
 }
 
 export default function InitiateTransactionModal({ user, isOpen, onClose, onInitiate, loading }: InitiateTransactionModalProps) {
+  const today = new Date().toISOString().split("T")[0];
+
   const [formData, setFormData] = useState<InitiateTransactionRequest>({
     status: "pending",
     amount: 0,
     type: "credit",
     description: "",
+    date: today,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -96,7 +99,7 @@ export default function InitiateTransactionModal({ user, isOpen, onClose, onInit
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 <FiDollarSign className="inline mr-2 text-sm" />
-                Amount
+                Amount ({formData.type === "credit" ? "Credit +" : "Debit −"})
               </label>
               <div className="relative">
                 <input
@@ -107,13 +110,17 @@ export default function InitiateTransactionModal({ user, isOpen, onClose, onInit
                   required
                   min="0.01"
                   step="0.01"
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
+                  className={`w-full pl-10 pr-4 py-3 border rounded-lg text-sm focus:outline-none focus:ring-2 transition ${
+                    formData.type === "credit"
+                      ? "border-gray-300 focus:ring-[#13b5a3] focus:border-[#13b5a3]"
+                      : "border-gray-300 focus:ring-red-400 focus:border-red-400"
+                  }`}
                 />
                 <FiDollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               </div>
               {formData.amount > 0 && (
-                <div className="mt-1 text-xs text-gray-500">
-                  {formatAmount(formData.amount)}
+                <div className={`mt-1 text-xs font-medium ${formData.type === "credit" ? "text-green-600" : "text-red-500"}`}>
+                  {formData.type === "credit" ? "+" : "−"}{formatAmount(formData.amount)}
                 </div>
               )}
             </div>
@@ -183,6 +190,20 @@ export default function InitiateTransactionModal({ user, isOpen, onClose, onInit
               />
             </div>
 
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                <FiCalendar className="inline mr-2 text-sm" />
+                Transaction Date
+              </label>
+              <input
+                type="date"
+                value={formData.date ?? ""}
+                onChange={(e) => handleInputChange("date", e.target.value)}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
+              />
+            </div>
+
             {/* Transaction Preview */}
             {(formData.amount > 0 || formData.description) && (
               <div className="p-3 bg-gray-50 rounded-lg">
@@ -199,6 +220,12 @@ export default function InitiateTransactionModal({ user, isOpen, onClose, onInit
                   <span className="text-sm text-gray-600">Status:</span>
                   <span className="text-sm font-medium capitalize">{formData.status}</span>
                 </div>
+                {formData.date && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-600">Date:</span>
+                    <span className="text-sm font-medium">{formData.date}</span>
+                  </div>
+                )}
                 {formData.description && (
                   <div className="mt-2">
                     <span className="text-sm text-gray-600">Description:</span>

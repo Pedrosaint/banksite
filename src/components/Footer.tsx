@@ -153,21 +153,21 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li>
                 <a
-                  href="#"
+                  href="tel:+14094442555"
                   className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
-                  [Contact Number Removed]
+                  +1 (409) 444-2555
                 </a>
               </li>
               <li>
                 <a
-                  href="https://www.wellsfargo.com"
+                  href="mailto:customercare@amerafirste.org"
                   className="text-gray-400 hover:text-[#13b5a3] transition duration-300"
                 >
-                  https://www.wellsfargo.com
+                  customercare@amerafirste.org
                 </a>
               </li>
-              <li className="text-gray-500 text-xs">Mon-Fri: Hours Removed</li>
+              <li className="text-gray-500 text-xs">Mon-Fri: 9:00 AM – 5:00 PM</li>
               <li>
                 <button
                   onClick={() => handleScroll("contact")}

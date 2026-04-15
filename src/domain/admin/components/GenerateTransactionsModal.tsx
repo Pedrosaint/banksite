@@ -7,6 +7,7 @@ import {
   FiRefreshCw,
   FiInfo,
   FiUser,
+  FiDollarSign,
 } from "react-icons/fi";
 import type { User, GenerateTransactionsRequest } from "../types";
 
@@ -32,6 +33,8 @@ export default function GenerateTransactionsModal({
     fromDate: "",
     toDate: "",
     count: 10,
+    minAmount: 10,
+    maxAmount: 5000,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -192,6 +195,51 @@ export default function GenerateTransactionsModal({
               </p>
             </div>
 
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <FiDollarSign className="inline mr-1 text-sm" />
+                  Min Amount
+                </label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    value={formData.minAmount === 0 ? "" : formData.minAmount}
+                    onChange={(e) =>
+                      handleInputChange("minAmount", e.target.value === "" ? 0 : parseFloat(e.target.value))
+                    }
+                    min="0.01"
+                    step="0.01"
+                    placeholder="10.00"
+                    className="w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
+                    required
+                  />
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <FiDollarSign className="inline mr-1 text-sm" />
+                  Max Amount
+                </label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    value={formData.maxAmount === 0 ? "" : formData.maxAmount}
+                    onChange={(e) =>
+                      handleInputChange("maxAmount", e.target.value === "" ? 0 : parseFloat(e.target.value))
+                    }
+                    min="0.01"
+                    step="0.01"
+                    placeholder="5000.00"
+                    className="w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
+                    required
+                  />
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
+                </div>
+              </div>
+            </div>
+
             {/* Quick Options */}
             <div className="p-3 bg-gray-50 rounded-lg">
               <p className="text-sm font-medium text-gray-700 mb-2">
@@ -202,11 +250,11 @@ export default function GenerateTransactionsModal({
                   type="button"
                   onClick={() => {
                     setFormData({
-                      fromDate: formatDateForInput(
-                        defaultFromDate.toISOString(),
-                      ),
+                      fromDate: formatDateForInput(defaultFromDate.toISOString()),
                       toDate: formatDateForInput(defaultToDate.toISOString()),
                       count: 10,
+                      minAmount: 10,
+                      maxAmount: 5000,
                     });
                   }}
                   className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-xs hover:bg-gray-50 transition-colors"
@@ -217,11 +265,11 @@ export default function GenerateTransactionsModal({
                   type="button"
                   onClick={() => {
                     setFormData({
-                      fromDate: formatDateForInput(
-                        defaultFromDate.toISOString(),
-                      ),
+                      fromDate: formatDateForInput(defaultFromDate.toISOString()),
                       toDate: formatDateForInput(defaultToDate.toISOString()),
                       count: 25,
+                      minAmount: 10,
+                      maxAmount: 5000,
                     });
                   }}
                   className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-xs hover:bg-gray-50 transition-colors"
@@ -231,20 +279,14 @@ export default function GenerateTransactionsModal({
                 <button
                   type="button"
                   onClick={() => {
-                    const lastMonth = new Date(
-                      today.getFullYear(),
-                      today.getMonth() - 1,
-                      1,
-                    );
-                    const endOfLastMonth = new Date(
-                      today.getFullYear(),
-                      today.getMonth(),
-                      0,
-                    );
+                    const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+                    const endOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
                     setFormData({
                       fromDate: formatDateForInput(lastMonth.toISOString()),
                       toDate: formatDateForInput(endOfLastMonth.toISOString()),
                       count: 15,
+                      minAmount: 10,
+                      maxAmount: 5000,
                     });
                   }}
                   className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-xs hover:bg-gray-50 transition-colors"
@@ -254,15 +296,13 @@ export default function GenerateTransactionsModal({
                 <button
                   type="button"
                   onClick={() => {
-                    const sixMonthsAgo = new Date(
-                      today.getFullYear(),
-                      today.getMonth() - 6,
-                      1,
-                    );
+                    const sixMonthsAgo = new Date(today.getFullYear(), today.getMonth() - 6, 1);
                     setFormData({
                       fromDate: formatDateForInput(sixMonthsAgo.toISOString()),
                       toDate: formatDateForInput(today.toISOString()),
                       count: 50,
+                      minAmount: 10,
+                      maxAmount: 5000,
                     });
                   }}
                   className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-xs hover:bg-gray-50 transition-colors"
@@ -281,20 +321,20 @@ export default function GenerateTransactionsModal({
                 <div className="space-y-1 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">From:</span>
-                    <span className="font-medium">
-                      {formData.fromDate || "Not set"}
-                    </span>
+                    <span className="font-medium">{formData.fromDate || "Not set"}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">To:</span>
-                    <span className="font-medium">
-                      {formData.toDate || "Not set"}
-                    </span>
+                    <span className="font-medium">{formData.toDate || "Not set"}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Count:</span>
+                    <span className="font-medium">{formData.count} transactions</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Amount range:</span>
                     <span className="font-medium">
-                      {formData.count} transactions
+                      ${formData.minAmount.toLocaleString()} – ${formData.maxAmount.toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -316,7 +356,10 @@ export default function GenerateTransactionsModal({
                   loading ||
                   !formData.fromDate ||
                   !formData.toDate ||
-                  formData.count <= 0
+                  formData.count <= 0 ||
+                  formData.minAmount <= 0 ||
+                  formData.maxAmount <= 0 ||
+                  formData.minAmount > formData.maxAmount
                 }
                 className="flex-1 px-4 py-2 bg-[#13b5a3] text-white rounded-lg text-sm font-medium hover:bg-[#0f9e8f] transition-colors disabled:opacity-60 flex items-center justify-center gap-2 cursor-pointer"
               >

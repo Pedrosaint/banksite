@@ -63,6 +63,7 @@ export interface InitiateTransactionRequest {
   amount: number;
   type: string;
   description: string;
+  date?: string;
 }
 
 export interface InitiateTransactionResponse {
@@ -78,6 +79,8 @@ export interface DeleteUserResponse {
 }
 
 export interface GenerateTransactionsRequest {
+  minAmount: number;
+  maxAmount: number;
   fromDate: string;
   toDate: string;
   count: number;

@@ -16,6 +16,7 @@ import MediaSection from "./components/MediaSection";
 import AboutSection from "./components/AboutSection";
 import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
+import GoogleTranslate from "./components/GoogleTranslate";
 import ProductPage from "./domain/ProductPage";
 import Login from "./auth/pages/Login";
 import Register from "./auth/pages/Register";
@@ -82,6 +83,7 @@ function HomePage() {
       <AboutSection />
       <ContactSection />
       <Footer />
+      <GoogleTranslate />
     </div>
   );
 }

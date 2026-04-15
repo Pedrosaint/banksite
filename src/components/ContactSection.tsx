@@ -61,7 +61,7 @@ export default function ContactSection() {
                     Main Office
                   </h4>
                   <p className="text-gray-600">
-                    [Location Removed]
+                    4180 N Harbor Blvd STE A,<br />Fullerton, CA 92835
                   </p>
                 </div>
               </div>
@@ -76,13 +76,13 @@ export default function ContactSection() {
                   </h4>
                   <p className="text-gray-600">
                     <a
-                      href="#"
+                      href="tel:+14094442555"
                       className="text-[#13b5a3] hover:text-[#0f9e8f] font-semibold transition-colors"
                     >
-                      [Phone Removed]
+                      +1 (409) 444-2555
                     </a>
                     <br />
-                    Mon-Fri, Hours Removed
+                    Mon-Fri, 9:00 AM – 5:00 PM
                   </p>
                 </div>
               </div>
@@ -97,10 +97,10 @@ export default function ContactSection() {
                   </h4>
                   <p className="text-gray-600">
                     <a
-                      href="https://www.wellsfargo.com"
+                      href="mailto:customercare@amerafirste.org"
                       className="text-[#13b5a3] hover:text-[#0f9e8f] font-semibold transition-colors"
                     >
-                      https://www.wellsfargo.com
+                      customercare@amerafirste.org
                     </a>
                   </p>
                 </div>
@@ -115,9 +115,9 @@ export default function ContactSection() {
                     Business Hours
                   </h4>
                   <p className="text-gray-600">
-                    Mon-Fri: Hours Removed
+                    Mon-Fri: 9:00 AM – 5:00 PM
                     <br />
-                    Sat: Hours Removed
+                    Sat: Closed
                     <br />
                     Sun: Closed
                   </p>
@@ -175,7 +175,7 @@ export default function ContactSection() {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition duration-300"
-                  placeholder="https://www.wellsfargo.com"
+                  placeholder="you@example.com"
                 />
               </div>
 
