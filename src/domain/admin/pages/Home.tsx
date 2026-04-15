@@ -354,7 +354,7 @@ export default function AdminHome() {
         </div>
 
         <div className="overflow-x-auto w-full">
-          <table className="w-full min-w-[800px] whitespace-nowrap">
+          <table className="w-full min-w-200 whitespace-nowrap">
             <thead>
               <tr className="bg-gray-50 text-left text-xs text-gray-500 uppercase">
                 <th className="px-5 py-3 font-medium">First Name</th>
