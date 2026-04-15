@@ -95,7 +95,7 @@ function UserActionDropdown({
         createPortal(
           <>
             <div
-              className="fixed inset-0 z-[60]"
+              className="fixed inset-0 z-60"
               onClick={() => setOpen(false)}
             />
             <div
@@ -103,7 +103,7 @@ function UserActionDropdown({
                 top: `${coords.top}px`,
                 left: `${coords.left}px`,
               }}
-              className="fixed w-56 bg-white rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-gray-100 py-2 z-[70] overflow-hidden transform origin-top-right animate-in fade-in zoom-in-95 duration-100"
+              className="fixed w-56 bg-white rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-gray-100 py-2 z-70 overflow-hidden transform origin-top-right animate-in fade-in zoom-in-95 duration-100"
             >
               <button
                 onClick={() => {
