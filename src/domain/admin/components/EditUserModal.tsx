@@ -82,6 +82,7 @@ export default function EditUserModal({
                 onChange={(e) =>
                   handleInputChange("first_name", e.target.value)
                 }
+                placeholder="Enter first name"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
                 required
               />
@@ -96,6 +97,7 @@ export default function EditUserModal({
                 type="text"
                 value={formData.last_name}
                 onChange={(e) => handleInputChange("last_name", e.target.value)}
+                placeholder="Enter last name"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
                 required
               />
@@ -110,6 +112,7 @@ export default function EditUserModal({
                 type="email"
                 value={formData.email}
                 onChange={(e) => handleInputChange("email", e.target.value)}
+                placeholder="user@example.com"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
                 required
               />

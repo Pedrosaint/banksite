@@ -232,6 +232,7 @@ export default function AdminHome() {
       const result = await updateTransaction({
         transactionId,
         transactionData,
+        userId: viewUser?.id,
       }).unwrap();
       if (result.success && result.transaction) {
         toast.success("Transaction updated successfully");

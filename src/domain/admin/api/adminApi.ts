@@ -18,6 +18,7 @@ import type {
 
 export const adminApi = createApi({
   reducerPath: "adminApi",
+  tagTypes: ["UserTransactions"],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BANK_API_URL,
     prepareHeaders: (headers, { getState }) => {
@@ -44,16 +45,19 @@ export const adminApi = createApi({
     }),
     getUserTransactions: builder.query<GetUserTransactionsResponse, string>({
       query: (userId) => `admin/user/${userId}/transactions`,
+      providesTags: (_result, _error, userId) => [{ type: "UserTransactions", id: userId }],
     }),
     updateTransaction: builder.mutation<
       UpdateTransactionResponse,
-      { transactionId: string; transactionData: UpdateTransactionRequest }
+      { transactionId: string; transactionData: UpdateTransactionRequest; userId?: string }
     >({
       query: ({ transactionId, transactionData }) => ({
         url: `admin/transaction/${transactionId}`,
         method: "PUT",
         body: transactionData,
       }),
+      invalidatesTags: (_result, _error, { userId }) =>
+        userId ? [{ type: "UserTransactions", id: userId }] : [],
     }),
     initiateTransaction: builder.mutation<
       InitiateTransactionResponse,
@@ -64,6 +68,7 @@ export const adminApi = createApi({
         method: "POST",
         body: transactionData,
       }),
+      invalidatesTags: (_result, _error, { userId }) => [{ type: "UserTransactions", id: userId }],
     }),
     deleteUser: builder.mutation<DeleteUserResponse, string>({
       query: (userId) => ({

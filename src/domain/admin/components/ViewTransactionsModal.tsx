@@ -19,7 +19,7 @@ interface ViewTransactionsModalProps {
   onUpdateTransaction?: (
     transactionId: string,
     transactionData: UpdateTransactionRequest
-  ) => void;
+  ) => Promise<void> | void;
   updatingTransaction?: boolean;
 }
 
@@ -106,14 +106,14 @@ export default function ViewTransactionsModal({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center p-4 overflow-y-auto"
+        className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
         onClick={onClose}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="bg-white rounded-xl w-full max-w-6xl my-8 overflow-hidden flex flex-col shadow-2xl"
+          className="bg-white rounded-xl w-full max-w-6xl h-[90vh] overflow-hidden flex flex-col shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           {/* HEADER */}
@@ -131,10 +131,10 @@ export default function ViewTransactionsModal({
           </div>
 
           {/* MAIN GRID */}
-          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
+          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] flex-1 min-h-0">
 
             {/* LEFT SIDE */}
-            <div className="p-6 border-r border-gray-100">
+            <div className="p-6 border-r border-gray-100 overflow-y-auto">
               {/* FILTERS */}
               <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
                 <h3 className="font-bold text-[#0a2540] text-lg">
@@ -241,7 +241,7 @@ export default function ViewTransactionsModal({
             </div>
 
             {/* RIGHT SIDE */}
-            <div className="p-8 bg-[#fafafa]">
+            <div className="p-8 bg-[#fafafa] overflow-y-auto">
               <div className="text-center">
                 {user.profileImageUrl ? (
                   <img
@@ -295,7 +295,10 @@ export default function ViewTransactionsModal({
           transaction={editTransaction}
           isOpen={!!editTransaction}
           onClose={() => setEditTransaction(null)}
-          onUpdate={onUpdateTransaction || (() => { })}
+          onUpdate={async (id, data) => {
+            await onUpdateTransaction?.(id, data);
+            setEditTransaction(null);
+          }}
           loading={updatingTransaction}
         />
       </motion.div>

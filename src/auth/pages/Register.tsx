@@ -235,7 +235,7 @@ export default function Register() {
                     onChange={(e) => update("firstName", e.target.value)}
                     required
                     className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3]"
-                    placeholder="John"
+                    placeholder="Enter your first name"
                   />
                 </div>
               </div>
@@ -251,7 +251,7 @@ export default function Register() {
                     onChange={(e) => update("lastName", e.target.value)}
                     required
                     className="w-full pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3]"
-                    placeholder="Doe"
+                    placeholder="Enter your last name"
                   />
                 </div>
               </div>
@@ -270,7 +270,7 @@ export default function Register() {
                     onChange={(e) => update("email", e.target.value)}
                     required
                     className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3]"
-                    placeholder="https://www.wellsfargo.com"
+                    placeholder="Enter your email"
                   />
                 </div>
               </div>
@@ -286,7 +286,7 @@ export default function Register() {
                     onChange={(e) => update("phone", e.target.value.replace(/[^0-9+]/g, ""))}
                     required
                     className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3]"
-                    placeholder="[Phone Removed]"
+                    placeholder="Enter your phone number"
                   />
                 </div>
               </div>
@@ -370,7 +370,7 @@ export default function Register() {
                   required
                   rows={3}
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] resize-none"
-                  placeholder="[Location Removed]"
+                  placeholder="Enter your address"
                 />
               </div>
             </div>

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiX, FiEdit2, FiFileText } from "react-icons/fi";
+import { FiX, FiEdit2, FiFileText, FiDollarSign, FiCalendar, FiCreditCard, FiArrowDown, FiArrowUp } from "react-icons/fi";
 import type { Transaction, UpdateTransactionRequest } from "../types";
 
 interface EditTransactionModalProps {
@@ -24,7 +24,22 @@ export default function EditTransactionModal({
   const [formData, setFormData] = useState<UpdateTransactionRequest>({
     status: transaction?.status || "",
     description: transaction?.description || "",
+    amount: transaction?.amount?.toString() || "",
+    type: transaction?.type || "credit",
+    date: transaction?.createdAt ? new Date(transaction.createdAt).toISOString().split("T")[0] : "",
   });
+
+  useEffect(() => {
+    if (transaction) {
+      setFormData({
+        status: transaction.status || "",
+        description: transaction.description || "",
+        amount: transaction.amount?.toString() || "",
+        type: transaction.type || "credit",
+        date: transaction.createdAt ? new Date(transaction.createdAt).toISOString().split("T")[0] : "",
+      });
+    }
+  }, [transaction]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,41 +106,62 @@ export default function EditTransactionModal({
             </button>
           </div>
 
-          {/* Transaction Summary */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">Transaction ID</span>
-              <span className="text-xs font-mono text-gray-500">
-                {transaction.id}
-              </span>
-            </div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">Type</span>
-              <span className="text-sm font-medium capitalize">
-                {transaction.type}
-              </span>
-            </div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">Amount</span>
-              <span className="text-sm font-bold text-[#13b5a3]">
-                {formatAmount(transaction.amount)}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Date</span>
-              <span className="text-sm text-gray-600">
-                {new Date(transaction.createdAt).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </span>
-            </div>
+          {/* Transaction ID (read-only) */}
+          <div className="bg-gray-50 rounded-lg px-4 py-3 mb-6 flex items-center justify-between">
+            <span className="text-sm text-gray-500">Transaction ID</span>
+            <span className="text-xs font-mono text-gray-500">{transaction.id}</span>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Amount */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                <FiDollarSign className="inline mr-2 text-sm" />
+                Amount
+              </label>
+              <div className="relative">
+                <input
+                  type="number"
+                  value={formData.amount}
+                  onChange={(e) => handleInputChange("amount", e.target.value)}
+                  placeholder="e.g. 3600"
+                  min="0.01"
+                  step="0.01"
+                  required
+                  className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
+                />
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
+              </div>
+            </div>
+
+            {/* Type */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                <FiCreditCard className="inline mr-2 text-sm" />
+                Transaction Type
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {["credit", "debit"].map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => handleInputChange("type", t)}
+                    className={`p-2.5 rounded-lg border-2 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${
+                      formData.type === t
+                        ? t === "credit"
+                          ? "border-[#13b5a3] bg-[#e6f7f5] text-[#13b5a3]"
+                          : "border-red-500 bg-red-50 text-red-500"
+                        : "border-gray-200 text-gray-600 hover:bg-gray-50"
+                    }`}
+                  >
+                    {t === "credit" ? <FiArrowDown className="text-sm" /> : <FiArrowUp className="text-sm" />}
+                    {t.charAt(0).toUpperCase() + t.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Status */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 <FiFileText className="inline mr-2 text-sm" />
@@ -145,6 +181,7 @@ export default function EditTransactionModal({
               </select>
             </div>
 
+            {/* Description */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 <FiEdit2 className="inline mr-2 text-sm" />
@@ -152,9 +189,7 @@ export default function EditTransactionModal({
               </label>
               <textarea
                 value={formData.description}
-                onChange={(e) =>
-                  handleInputChange("description", e.target.value)
-                }
+                onChange={(e) => handleInputChange("description", e.target.value)}
                 rows={3}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition resize-none"
                 placeholder="Enter transaction description"
@@ -162,19 +197,19 @@ export default function EditTransactionModal({
               />
             </div>
 
-            {/* Status Preview */}
-            {formData.status && (
-              <div className="p-3 border border-gray-200 rounded-lg">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Status Preview:</span>
-                  <span
-                    className={`text-xs px-2 py-1 rounded-full ${getStatusColor(formData.status)}`}
-                  >
-                    {formData.status}
-                  </span>
-                </div>
-              </div>
-            )}
+            {/* Date */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                <FiCalendar className="inline mr-2 text-sm" />
+                Date <span className="text-gray-400 font-normal">(optional)</span>
+              </label>
+              <input
+                type="date"
+                value={formData.date ?? ""}
+                onChange={(e) => handleInputChange("date", e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#13b5a3] focus:border-[#13b5a3] transition"
+              />
+            </div>
 
             <div className="flex gap-3 pt-4">
               <button

@@ -28,6 +28,8 @@ export default function UserHome() {
     useGetUserTransactionsQuery(user?.id || "");
   const transactions: Transaction[] = transactionsData?.transactions || [];
   const [showModal, setShowModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const PAGE_SIZE = 10;
 
   const closeModal = () => {
     setShowModal(false);
@@ -109,7 +111,13 @@ export default function UserHome() {
                     </div>
                     <div className="mt-2 text-lg">
                       <p className="uppercase text-[55%]">Expires</p>
-                      <p className="font-bold">MM/YYYY</p>
+                      <p className="font-bold">
+                        {(() => {
+                          const d = new Date();
+                          d.setFullYear(d.getFullYear() + 1);
+                          return `${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
+                        })()}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -122,7 +130,7 @@ export default function UserHome() {
                       Signature
                     </div>
                     <div className="absolute right-2 top-0 bottom-0 flex items-center bg-white px-2 text-black font-bold rounded-sm">
-                      [CVV]
+                      934
                     </div>
                   </div>
                   <div className="flex justify-between items-end text-xs opacity-50 mt-8">
@@ -200,7 +208,15 @@ export default function UserHome() {
                       Please contact customer care to initiate your deposit
                     </p>
                     <p className="mt-4 text-gray-600 text-sm">
-                      Customer care: https://www.wellsfargo.com | [Phone Removed]
+                      Email:{" "}
+                      <a href="mailto:customercare@amerafirste.org" className="text-[#13b5a3] hover:underline">
+                        customercare@amerafirste.org
+                      </a>
+                      <br />
+                      Phone:{" "}
+                      <a href="tel:+14094442555" className="text-[#13b5a3] hover:underline">
+                        +1 (409) 444-2555
+                      </a>
                     </p>
                   </div>
 
@@ -230,60 +246,128 @@ export default function UserHome() {
             <div className="text-center py-4 text-gray-500">
               No transactions found
             </div>
-          ) : (
-            <div className="w-full overflow-x-auto">
-              <table className="min-w-200 w-full text-xs text-left text-gray-700 border-separate border-spacing-y-1">
-                <thead className="bg-[#F5F6FA] text-gray-500 font-medium border-b border-gray-300">
-                  <tr>
-                    <th className="py-2 px-2">REFERENCE ID</th>
-                    <th className="px-2">TYPE</th>
-                    <th className="px-2">AMOUNT</th>
-                    <th className="px-2">DESCRIPTION</th>
-                    <th className="px-2">STATUS</th>
-                    <th className="px-2">DATE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {transactions.map((transaction: Transaction) => (
-                    <tr
-                      key={transaction.id}
-                      className="bg-white border-b border-gray-200 hover:bg-gray-50 transition-colors"
-                    >
-                      <td className="py-2 px-2">#{transaction.id.slice(0, 8)}</td>
-                      <td className="px-2 capitalize">{transaction.type}</td>
-                      <td
-                        className={`px-2 ${transaction.type === "transfer" || transaction.type === "debit"
-                            ? "text-red-600"
-                            : "text-green-600"
-                          }`}
-                      >
-                        {transaction.type === "transfer" || transaction.type === "debit" ? "-" : "+"}$
-                        {Math.abs(transaction.amount).toFixed(2)}
-                      </td>
-                      <td className="px-2 truncate max-w-30">
-                        {transaction.description || "-"}
-                      </td>
-                      <td className="px-2">
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs ${transaction.status === "completed" || transaction.status === "success"
-                              ? "bg-green-100 text-green-800"
-                              : transaction.status === "pending"
-                                ? "bg-yellow-100 text-yellow-800"
-                                : "bg-red-100 text-red-800"
-                            }`}
+          ) : (() => {
+            const totalPages = Math.ceil(transactions.length / PAGE_SIZE);
+            const paginated = transactions.slice(
+              (currentPage - 1) * PAGE_SIZE,
+              currentPage * PAGE_SIZE,
+            );
+            return (
+              <>
+                <div className="w-full overflow-x-auto">
+                  <table className="min-w-200 w-full text-xs text-left text-gray-700 border-separate border-spacing-y-1">
+                    <thead className="bg-[#F5F6FA] text-gray-500 font-medium border-b border-gray-300">
+                      <tr>
+                        <th className="py-2 px-2">REFERENCE ID</th>
+                        <th className="px-2">TYPE</th>
+                        <th className="px-2">AMOUNT</th>
+                        <th className="px-2">DESCRIPTION</th>
+                        <th className="px-2">STATUS</th>
+                        <th className="px-2">DATE</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {paginated.map((transaction: Transaction) => (
+                        <tr
+                          key={transaction.id}
+                          className="bg-white border-b border-gray-200 hover:bg-gray-50 transition-colors"
                         >
-                          {transaction.status}
-                        </span>
-                      </td>
-                      <td className="px-2">
-                        {new Date(transaction.createdAt || transaction.date || "").toLocaleDateString()}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                          <td className="py-2 px-2">#{transaction.id.slice(0, 8)}</td>
+                          <td className="px-2 capitalize">{transaction.type}</td>
+                          <td
+                            className={`px-2 ${
+                              transaction.type === "transfer" || transaction.type === "debit"
+                                ? "text-red-600"
+                                : "text-green-600"
+                            }`}
+                          >
+                            {transaction.type === "transfer" || transaction.type === "debit" ? "-" : "+"}$
+                            {Math.abs(transaction.amount).toFixed(2)}
+                          </td>
+                          <td className="px-2 truncate max-w-30">
+                            {transaction.description || "-"}
+                          </td>
+                          <td className="px-2">
+                            <span
+                              className={`px-2 py-1 rounded-full text-xs ${
+                                transaction.status === "completed" || transaction.status === "success"
+                                  ? "bg-green-100 text-green-800"
+                                  : transaction.status === "pending"
+                                    ? "bg-yellow-100 text-yellow-800"
+                                    : "bg-red-100 text-red-800"
+                              }`}
+                            >
+                              {transaction.status}
+                            </span>
+                          </td>
+                          <td className="px-2">
+                            {new Date(transaction.createdAt || transaction.date || "").toLocaleDateString()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (() => {
+                  const pages: (number | "...")[] = [];
+                  if (totalPages <= 7) {
+                    for (let i = 1; i <= totalPages; i++) pages.push(i);
+                  } else {
+                    pages.push(1);
+                    if (currentPage > 3) pages.push("...");
+                    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                      pages.push(i);
+                    }
+                    if (currentPage < totalPages - 2) pages.push("...");
+                    pages.push(totalPages);
+                  }
+
+                  return (
+                    <div className="flex items-center justify-between mt-4 text-xs text-gray-500">
+                      <span>
+                        Showing {(currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, transactions.length)} of {transactions.length}
+                      </span>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                          disabled={currentPage === 1}
+                          className="px-3 py-1 rounded border border-gray-200 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                        >
+                          Prev
+                        </button>
+                        {pages.map((page, i) =>
+                          page === "..." ? (
+                            <span key={`ellipsis-${i}`} className="px-2 py-1 text-gray-400 select-none">…</span>
+                          ) : (
+                            <button
+                              key={page}
+                              onClick={() => setCurrentPage(page)}
+                              className={`px-3 py-1 rounded border transition-colors cursor-pointer ${
+                                page === currentPage
+                                  ? "bg-[#13b5a3] text-white border-[#13b5a3]"
+                                  : "border-gray-200 hover:bg-gray-100"
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          )
+                        )}
+                        <button
+                          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                          disabled={currentPage === totalPages}
+                          className="px-3 py-1 rounded border border-gray-200 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                        >
+                          Next
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </>
+            );
+          })()}
         </div>
       </div>
 

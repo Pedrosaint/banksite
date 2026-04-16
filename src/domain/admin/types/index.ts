@@ -51,6 +51,9 @@ export interface GetUserTransactionsResponse {
 export interface UpdateTransactionRequest {
   status?: string;
   description?: string;
+  amount?: string;
+  type?: string;
+  date?: string;
 }
 
 export interface UpdateTransactionResponse {

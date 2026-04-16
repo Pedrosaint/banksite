@@ -220,7 +220,7 @@ export default function InternationalTransferView() {
                 <input
                   name="accountNumber"
                   type="text"
-                  placeholder="REDACTED"
+                  placeholder="e.g. 123456789012"
                   value={form.accountNumber ?? ""}
                   onChange={handleChange}
                   required
@@ -236,7 +236,7 @@ export default function InternationalTransferView() {
                 <input
                   name="ibanNumber"
                   type="text"
-                  placeholder="REDACTED"
+                  placeholder="e.g. GB29NWBK60161331926819"
                   value={form.ibanNumber ?? ""}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-200 rounded-md text-sm text-gray-800 focus:outline-none"
@@ -251,7 +251,7 @@ export default function InternationalTransferView() {
                 <input
                   name="swiftCode"
                   type="text"
-                  placeholder="REDACTED"
+                  placeholder="e.g. NWBKGB2L"
                   value={form.swiftCode ?? ""}
                   onChange={handleChange}
                   required
@@ -283,7 +283,7 @@ export default function InternationalTransferView() {
                 <input
                   name="bankAddress"
                   type="text"
-                  placeholder="[Location Removed]"
+                  placeholder="e.g. 1 Princes St, London, UK"
                   value={form.bankAddress ?? ""}
                   onChange={handleChange}
                   required
@@ -337,7 +337,7 @@ export default function InternationalTransferView() {
                 <input
                   name="amount"
                   type="text"
-                  placeholder="X.XX"
+                  placeholder="e.g. 1,000.00"
                   value={form.amount ?? ""}
                   onChange={handleChange}
                   required
