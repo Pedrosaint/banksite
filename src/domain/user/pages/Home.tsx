@@ -79,13 +79,19 @@ export default function UserHome() {
               <div>
                 <p className="text-gray-500">Total Balance</p>
                 <h2 className="text-3xl font-bold">
-                  ${balance.toLocaleString()}
+                                    ${balance.toLocaleString("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
                 </h2>
               </div>
               <div>
                 <p className="text-gray-500">Available Balance</p>
                 <h2 className="text-3xl font-bold">
-                  ${balance.toLocaleString()}
+                                    ${balance.toLocaleString("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
                 </h2>
               </div>
             </div>
@@ -96,7 +102,10 @@ export default function UserHome() {
                 <div className="absolute w-full h-full backface-hidden bg-[#0f9e8f] text-white rounded-lg p-4 shadow cursor-pointer">
                   <div className="flex justify-end">
                     <span className="font-bold text-lg">
-                      ${balance.toLocaleString()}
+                                        ${balance.toLocaleString("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
                     </span>
                   </div>
                   <div className="mt-6 text-xl tracking-widest text-center font-semibold">
@@ -158,7 +167,10 @@ export default function UserHome() {
               </div>
               <div className="flex justify-between">
                 <span>Balance :</span>
-                <span>${balance.toLocaleString()}</span>
+                <span>                  ${balance.toLocaleString("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}</span>
               </div>
               <div className="flex justify-between">
                 <span>Account Type :</span>
@@ -261,7 +273,6 @@ export default function UserHome() {
                         <th className="py-2 px-2">REFERENCE ID</th>
                         <th className="px-2">TYPE</th>
                         <th className="px-2">AMOUNT</th>
-                        <th className="px-2">DESCRIPTION</th>
                         <th className="px-2">STATUS</th>
                         <th className="px-2">DATE</th>
                       </tr>
@@ -282,10 +293,10 @@ export default function UserHome() {
                             }`}
                           >
                             {transaction.type === "transfer" || transaction.type === "debit" ? "-" : "+"}$
-                            {Math.abs(transaction.amount).toFixed(2)}
-                          </td>
-                          <td className="px-2 truncate max-w-30">
-                            {transaction.description || "-"}
+                            {Math.abs(transaction.amount).toLocaleString("en-US", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
                           </td>
                           <td className="px-2">
                             <span

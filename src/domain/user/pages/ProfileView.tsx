@@ -24,23 +24,23 @@ export default function ProfileView() {
     { label: "Phone Number", value: user.phoneNumber },
     { label: "Country", value: user.country },
     { label: "Address", value: user.address },
-    { label: "Date of Birth", value: user.dateOfBirth },
+    {
+      label: "Date of Birth",
+      value: user.dateOfBirth
+        ? new Date(user.dateOfBirth).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        : user.dateOfBirth,
+    },
     { label: "Account Number", value: maskedAccount },
     { label: "Account Type", value: user.accountType },
     {
       label: "Account Status",
       value: user.isSuspicious ? "Under Review" : "Active",
     },
-    {
-      label: "Member Since",
-      value: user.createdAt
-        ? new Date(user.createdAt).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
-        : undefined,
-    },
+
   ];
 
   return (
@@ -73,7 +73,10 @@ export default function ProfileView() {
             Balance
           </p>
           <p className="text-2xl font-bold text-[#13b5a3]">
-            ${balance?.toLocaleString() ?? "0.00"}
+            ${balance?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }) ?? "0.00"}
           </p>
         </div>
       </div>
