@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiX, FiEdit2, FiFileText, FiDollarSign, FiCalendar, FiCreditCard, FiArrowDown, FiArrowUp } from "react-icons/fi";
@@ -58,23 +59,6 @@ export default function EditTransactionModal({
     }));
   };
 
-  const getStatusColor = (status: string) => {
-    const colors: Record<string, string> = {
-      success: "text-green-600 bg-green-50 border-green-200",
-      pending: "text-yellow-600 bg-yellow-50 border-yellow-200",
-      failed: "text-red-600 bg-red-50 border-red-200",
-      completed: "text-blue-600 bg-blue-50 border-blue-200",
-    };
-    return colors[status] || "text-gray-600 bg-gray-50 border-gray-200";
-  };
-
-  const formatAmount = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-    }).format(amount);
-  };
 
   if (!isOpen || !transaction) return null;
 
